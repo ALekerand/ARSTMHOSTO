@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+
+
+	<ui:composition template="/templates/template.xhtml">
+			
+			<ui:define name="body">
+			<div style="font-size: 15px ;  padding-left: 20px; padding-right: 20px">
+			
+			<h:form id="form">
+			<p:messages autoUpdate="true" closable="true" showDetail="false"></p:messages>
+			<p:panel header="Enregistrement de genre" style="text-align:center ; padding:20px;" >
+	<h:panelGrid  columns="4" cellspacing="15"  style="margin: 15px;">
+	
+		 <h:outputLabel value="Libelle genre"></h:outputLabel>
+	     <h:inputText value="#{genreController.genre.codeGenre}"></h:inputText>
+	
+	     <h:outputLabel value="Libelle genre"></h:outputLabel>
+	     <h:inputText value="#{genreController.genre.libelleGenre}"></h:inputText>
+	     
+	     
+	     
+<!-- binding permet de faire un lien -->
+	   
+	  </h:panelGrid>
+	  <p:toolbar>
+	         <f:facet name="left">
+	             <p:commandButton  value="Enregistrer" actionListener="#{genreController.enregistrer}" update="form"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+	             <p:commandButton  value="Modifier" actionListener="#{genreController.modifier}" update="form"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+	             <p:commandButton value="Supprimer" actionListener="#{genreController.supprimer}" update="form" ><p:confirm header="confirmation" message="confirmez-vous la suppression?"></p:confirm></p:commandButton>  
+	         </f:facet>
+	   </p:toolbar>
+	  </p:panel>
+	 
+	  <br/>
+	
+	   <div style="font-size: 15px ; padding-top: 15px; padding-left: 35px; padding-right: 35px">
+	  <p:dataTable var="var"  value="#{genreController.listGenre}"  selectionMode="single" selection="#{genreController.selectedGenre}" rowKey="#{var.idGenre}">
+	  <f:facet name="header">LISTES DE GENRE</f:facet>
+	  <p:ajax event="rowSelect" listener="#{genreController.selectionnerLigne}" update="form" ></p:ajax>
+	     
+	     <p:column headerText="Code genre" >
+	     <h:outputText value="#{var.codeGenre}" />
+	    </p:column>
+	     <p:column headerText="Libelle genre" >
+	     <h:outputText value="#{var.libelleGenre}" />
+	     </p:column>
+	     
+	   </p:dataTable>
+	   </div>
+	   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	   
+	   </p:confirmDialog>
+	  
+      </h:form>
+      </div>
+	</ui:define>	
+	
+	</ui:composition>
+</body> 
+</html>
