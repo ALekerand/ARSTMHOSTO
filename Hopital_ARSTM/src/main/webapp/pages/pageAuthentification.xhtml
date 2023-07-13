@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+
+		<ui:composition template="/templates/template.xhtml">
+		<ui:define name="body">
+		<div style="font-size: 15px ;  padding-left: 20px; padding-right: 20px">
+			
+			<h:form id="form">
+			
+				
+				<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+				
+		<fieldset><legend>INFORMATION SUR L'UTILISATEUR</legend>		
+<h:panelGrid columns="4" cellpadding="10">
+	
+	<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
+	<p:inputText id="input_nom" value="#{userAuthenticationController.userAuthentication.nom}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+
+	<p:outputLabel for="input_prenom" value="Prenoms:"></p:outputLabel>
+	<p:inputText id="input_prenom" value="#{userAuthenticationController.userAuthentication.prenoms}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+
+
+	<p:outputLabel for="input_lib" value="Téléphone:"></p:outputLabel>
+	<p:inputText id="input_lib" value="#{userAuthenticationController.userAuthentication.telephone}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+	<p:outputLabel for="input_email" value="Email:"></p:outputLabel>
+	<p:inputText id="input_email" value="#{userAuthenticationController.userAuthentication.email}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+</h:panelGrid>
+</fieldset>
+
+		<fieldset>
+ 	<legend>DETAILS DES DROITS</legend>		
+<p:panelGrid columns="8" cellpadding="5" columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+
+	<p:outputLabel for="input_login" value="Login:"></p:outputLabel>
+	<p:inputText id="input_login" value="#{userAuthenticationController.userAuthentication.username}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+	
+	
+	<p:outputLabel for="input_mdp" value="Password:"></p:outputLabel>
+	<p:inputText id="input_mdp" value="#{userAuthenticationController.userAuthentication.password}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+	
+	
+	<p:outputLabel value="Profile utilisateur:"/>					
+	<p:selectOneRadio 
+		id="rd1" value="#{userAuthenticationController.role}" layout="grid" columns="4" unselectable="false" >
+		<f:selectItem itemLabel="Adminitrateur" itemValue="ROLE_ADMIN"></f:selectItem>
+		<f:selectItem itemLabel="Utilistaeur standard" itemValue="ROLE_UTILISATAEUR"></f:selectItem>
+	</p:selectOneRadio>
+</p:panelGrid>
+</fieldset>
+<br/>
+<p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" action="#{userAuthenticationController.enregistrer}" update="form" binding="#{userAuthenticationController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Supprimer"  action="#{userAuthenticationController.supprimer}" process="@this" update="form" binding="#{userAuthenticationController.btnSupprimer}"><p:confirm header="confirmation" message="voulez-vous annuler?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier"  action="#{userAuthenticationController.modifier}" update="form" binding="#{userAuthenticationController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+			</f:facet>
+		</p:toolbar>
+		
+		<br/>
+
+<div style="font-size: 15px ; padding-top: 15px; padding-left: 35px; padding-right: 35px">		
+	<p:dataTable  var="var" value="#{userAuthenticationController.listUserAuthentication}"  selectionMode="single" selection="#{userAuthenticationController.selectedUserAuthentication}" rowKey="#{var.userId}">
+ 
+ <f:facet name="header"> LISTE DES UTILISATEURS </f:facet>
+     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{userAuthenticationController.selectionnerLigne}"></p:ajax>
+   		
+  
+        <p:column headerText="Nom">
+        <h:outputText value="#{var.nom}"/>
+        </p:column>
+        
+        <p:column headerText="Prenoms">
+        <h:outputText value="#{var.prenoms}"/>
+        </p:column>
+        
+        <p:column headerText="Téléphone">
+        <h:outputText value="#{var.telephone}"/>
+        </p:column>
+        
+        <p:column headerText="Email">
+        <h:outputText value="#{var.email}"/>
+        </p:column>
+        
+     
+        
+        </p:dataTable>
+					</div>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	   </p:confirmDialog>
+	 
+		</h:form>
+		  	</div>
+		</ui:define>
+	</ui:composition>
+</body> 
+</html>

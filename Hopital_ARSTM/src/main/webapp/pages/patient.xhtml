@@ -57,7 +57,7 @@
 	  </h:panelGrid>
 	  <p:toolbar>
 	         <f:facet name="left">
-	             <p:commandButton  value="Enregistrer " actionListener="#{patientController.enregistrer}" update="form"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+	             <p:commandButton  value="Enregistrer " actionListener="#{patientController.enregistrer}" update="form" binding="#{patientController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
 	             <p:commandButton value="Supprimer"  update="form"></p:commandButton>  
 	         </f:facet>
 	   </p:toolbar>

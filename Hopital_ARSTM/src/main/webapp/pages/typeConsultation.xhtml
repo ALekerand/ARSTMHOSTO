@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+
+<ui:composition template="/templates/template.xhtml">
+			
+			<ui:define name="body">
+			<div style="font-size: 15px ;  padding-left: 20px; padding-right: 20px">
+			
+			<h:form id="form">
+			
+			<p:messages autoUpdate="true" closable="true" showDetail="false"></p:messages>
+			
+			<p:panel header="ENREGISTREMENT DES TYPES DE CONSULTATION" style="text-align:center ; padding:20px; color:blue;" >
+	<h:panelGrid  columns="4" cellspacing="15" style="margin: 15px;">
+	
+	
+		<h:outputLabel value="code type_consultation "></h:outputLabel>
+	     <h:inputText value="#{typeConsultationController.typeConsultation.codeTypeConsultation}"></h:inputText>
+	     
+	     <h:outputLabel value="Montant type_consultation "></h:outputLabel>
+	     <h:inputText value="#{typeConsultationController.typeConsultation.montantTypeConsult}"></h:inputText>
+	     
+<!-- binding permet de faire un lien -->
+	   
+	  </h:panelGrid>
+	  <p:toolbar>
+	         <f:facet name="left">
+	             <p:commandButton  value="Enregistrer"  actionListener="#{typeConsultationController.enregistrer}" update="form" binding="#{typeConsultationController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+	             <p:commandButton  value="Modifier" actionListener="#{typeConsultationController.modifier}" update="form" binding="#{typeConsultationController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+	             <p:commandButton value="Supprimer" actionListener="#{typeConsultationController.supprimer}" update="form" binding="#{typeConsultationController.btnSupprimer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>  
+	         </f:facet>
+	   </p:toolbar>
+	  </p:panel>
+	 
+	  <br/>
+	
+	  	  <div style="font-size: 15px ; padding-top: 15px; padding-left: 35px; padding-right: 35px">
+	  <p:dataTable var="var" value="#{typeConsultationController.listTypeConsultation}"   selectionMode="single" selection="#{typeConsultationController.selectedTypeConsultation}" rowKey="#{var.idTypeConsultation}">
+	  <f:facet name="header">LISTES DES TYPES DE CONSULTATION</f:facet>
+	  <p:ajax event="rowSelect" listener="#{typeConsultationController.selectionnerLigne}" update="form" ></p:ajax>
+	     
+	     <p:column headerText="Code type_consultation" >
+	     <h:outputText value="#{var.codeTypeConsultation}" />
+	    </p:column>
+	     <p:column headerText="Montant type_consultation " >
+	     <h:outputText value="#{var.montantTypeConsult}" />
+	     </p:column>
+	     
+	   </p:dataTable>
+	   </div>
+	   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	   
+	   </p:confirmDialog>
+	  
+      </h:form>
+      </div>
+      </ui:define>
+     </ui:composition>
+</body> 
+</html>

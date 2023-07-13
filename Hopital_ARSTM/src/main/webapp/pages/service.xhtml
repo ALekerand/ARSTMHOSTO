@@ -32,9 +32,9 @@
 	  </h:panelGrid>
 	  <p:toolbar>
 	         <f:facet name="left">
-	             <p:commandButton  value="Enregistrer" actionListener="#{serviceController.enregistrer}" update="form"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-	             <p:commandButton  value="Modifier" actionListener="#{serviceController.modifier}" update="form"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
-	             <p:commandButton value="Supprimer" actionListener="#{serviceController.supprimer}" update="form" ><p:confirm header="confirmation" message="confirmez-vous la suppression?"></p:confirm></p:commandButton>  
+	             <p:commandButton  value="Enregistrer" actionListener="#{serviceController.enregistrer}" update="form" binding="#{serviceController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+	             <p:commandButton  value="Modifier" actionListener="#{serviceController.modifier}" update="form" binding="#{serviceController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+	             <p:commandButton value="Supprimer" actionListener="#{serviceController.supprimer}" update="form" binding="#{serviceController.btnSupprimer}"><p:confirm header="confirmation" message="confirmez-vous la suppression?"></p:confirm></p:commandButton>  
 	         </f:facet>
 	   </p:toolbar>
 	  </p:panel>
