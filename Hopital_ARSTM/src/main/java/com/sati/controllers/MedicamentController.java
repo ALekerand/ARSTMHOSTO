@@ -52,6 +52,7 @@ public class MedicamentController {
 		return new String(prefix+(nbEnregistrement+1));
 
 	}
+	
 	public void enregistrer() {
 		medicament.setCodeMedicauent(genererCodeMedicament());
 		medicament.setStockActuel(stockActuel);
