@@ -5,110 +5,98 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"> 
 
-<h:head></h:head> 
-<body> 
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+				<fieldset>
+ 	<legend>ENREGISTREMENT DES PATIENTS</legend>		
+		<h:panelGrid columns="6" cellpadding="10">
+	<p:outputLabel for="input_code" value="Code patient"></p:outputLabel>
+	<p:inputText id="input_code" value="#{patientController.patient.codePatient}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
 
-	<ui:composition template="/templates/template.xhtml">
-			
-			<ui:define name="body">
-			
-
-			<h:form id="form">
-			
-			<p:messages autoUpdate="true" closable="true" showDetail="false"></p:messages>
-			<p:panel header="ENREGISTREMENT DES PATIENTS">
-	<h:panelGrid  columns="4" cellspacing="15" style="margin: 15px;">
+	<p:outputLabel for="input_nom" value="Nom patient"></p:outputLabel>
+	<p:inputText id="input_nom" value="#{patientController.patient.nomPatient}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
 	
-	     <h:outputLabel value="Code patient"></h:outputLabel>
-	     <h:inputText value="#{patientController.codePatient}"></h:inputText>
-	     
-	     
-	     <h:outputLabel value="Nom patient"></h:outputLabel>
-	     <h:inputText value="#{patientController.nomPatient}" ></h:inputText>
-	     
-	     <h:outputLabel value="Prenoms patient"></h:outputLabel>
-	     <h:inputText value="#{patientController.prenomPatient}" ></h:inputText>
-	     
-	      <h:outputLabel value="Téléphone patient"></h:outputLabel>
-	     <h:inputText value="#{patientController.telephonePatient}" ></h:inputText>
-	     
-	     <h:outputLabel value=" Genre"></h:outputLabel>
-	     <p:selectOneMenu value="#{patientController.idGenre}" >
-	        <f:selectItem itemLabel="Selectionner" itemValue=""></f:selectItem>	
-	        <f:selectItems value="#{patientController.listGenre}" var="tata" itemLabel="#{tata.libelleGenre}" itemValue="#{tata.idGenre}"></f:selectItems>	
-	     </p:selectOneMenu>
-	     
-	   
-	      <h:outputLabel value=" filière étudiantArstm"></h:outputLabel>
-	     <p:selectOneMenu value="#{patientController.idFiliere}" >
-	        <f:selectItem itemLabel="Selectionner" itemValue=""></f:selectItem>	
-	        <f:selectItems value="#{patientController.listFiliere}" var="tata" itemLabel="#{tata.libelleFiliere}" itemValue="#{tata.idFiliere}"></f:selectItems>	
-	     </p:selectOneMenu>
-	       
-	      <h:outputLabel value=" Service"></h:outputLabel>
-	     <p:selectOneMenu value="#{patientController.idService}" >
-	        <f:selectItem itemLabel="Selectionner" itemValue=""></f:selectItem>	
-	        <f:selectItems value="#{patientController.listService}" var="tata" itemLabel="#{tata.libelleService}" itemValue="#{tata.idService}"></f:selectItems>	
-	     </p:selectOneMenu>
-	     
-	     
-	     <!-- binding permet de faire un lien -->
-	   
-	  </h:panelGrid>
-	  
-	  </p:panel>
-	 		<p:toolbar>
-	         <f:facet name="left">
-	             <p:commandButton  value="Enregistrer " actionListener="#{patientController.enregistrer}" update="form" binding="#{patientController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-	             <p:commandButton value="Supprimer"  update="form"></p:commandButton>  
-	         </f:facet>
-	   </p:toolbar>
-	  <br/>
-	     
-	      <div style="font-size: 15px ; padding-top: 15px; padding-left: 35px; padding-right: 35px">
-	   <p:dataTable var="variable" value="#{patientController.listPatient}" selectionMode="single" selection="#{patientController.selectedPatient}" rowKey="#{variable.idPatient}">
-	  <f:facet name="header">LISTES DES PATIENTS</f:facet>
-	  <p:ajax event="rowSelect" listener="#{patientController.selectionnerLigne}" update="form"></p:ajax>
-	     
-	     
-	     <p:column headerText="Code patient" >
-	     <h:outputText value="#{variable.codePatient}"/>
-	    </p:column>
-	    
-	     <p:column headerText="Nom patient" >
-	     <h:outputText value="#{variable.nomPatient}"/>
-	    </p:column>
-	    
-	    <p:column headerText="Prenoms patient">
-	    <h:outputText value="#{variable.prenomPatient}" />
-	    </p:column>
-	    
-	       
-	     <p:column headerText="Téléphone patient" >
-	     <h:outputText value="#{variable.telephonePatient}"/>
-	     </p:column>
-	     
-	     
-	     
-	     
-	   </p:dataTable>
-	   </div>
-	   
-	   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	<p:outputLabel for="input_pren" value="Prenom patient"></p:outputLabel>
+	<p:inputText id="input_pren" value="#{patientController.patient.prenomPatient}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	
+	<p:outputLabel for="input_tel" value="Telephone patient"></p:outputLabel>
+	<p:inputText id="input_tel" value="#{patientController.patient.telephonePatient}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	
+	<p:outputLabel  value="Genre"></p:outputLabel>
+	<p:selectOneMenu value="#{patientController.idGenre}">
+		<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+		<f:selectItems value="#{patientController.listGenre}" var="tata" itemValue="#{tata.idGenre}" itemLabel="#{tata.libelleGenre}"/>
+	</p:selectOneMenu>
+	
+	<p:outputLabel  value="Filière"></p:outputLabel>
+	<p:selectOneMenu value="#{patientController.idFiliere}">
+		<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+		<f:selectItems value="#{patientController.listFiliere}" var="tata" itemValue="#{tata.idFiliere}" itemLabel="#{tata.libelleFiliere}"/>
+	</p:selectOneMenu>
+	
+	<p:outputLabel  value="Services"></p:outputLabel>
+	<p:selectOneMenu value="#{patientController.idService}">
+		<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+		<f:selectItems value="#{patientController.listService}" var="tata" itemValue="#{tata.idService}" itemLabel="#{tata.libelleService}"/>
+	</p:selectOneMenu>
+	
+
+		
+
+</h:panelGrid>
+</fieldset>
+<br />
+
+<p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" action="#{patientController.enregistrer}" update="form" binding="#{patientController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier"  action="#{patientController.modifier}" update="form" binding="#{patientController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+			</f:facet>
+		</p:toolbar>
+		<br/>
+		
+		<p:dataTable  var="var" value="#{patientController.listPatient}"  selectionMode="single" selection="#{patientController.selectedPatient}" rowKey="#{var.idPatient}">
+ 
+ <f:facet name="header"> LISTE DES PATIENTS</f:facet>
+     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{patientController.selectionnerLigne}"></p:ajax>
+   		
+   		<p:column headerText="Code Patient" style="width:30%">
+        <h:outputText value="#{var.codePatient}"/>
+        </p:column>
+        
+        <p:column headerText="Nom patient">
+        <h:outputText value="#{var.nomPatient}"/>
+        </p:column>
+        
+         <p:column headerText="Prenom patient">
+        <h:outputText value="#{var.prenomPatient}"/>
+        </p:column>
+        
+         <p:column headerText="Telephone patient">
+        <h:outputText value="#{var.telephonePatient}"/>
+        </p:column>
+        
+         <p:column headerText="Genre">
+        <h:outputText value="#{var.genre.libelleGenre}"/>
+        </p:column>
+        
+        </p:dataTable>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 	   <p:commandButton value="Oui" type="button"
 	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
 	   </p:commandButton>
 	   <p:commandButton value="Non" type="button"
 	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
 	   </p:commandButton>
-	   
 	   </p:confirmDialog>
-	  
-      </h:form>
- 
-	</ui:define>	
+	   
+		</h:form>
 	
-	</ui:composition> 
+	</ui:define>
 
-</body> 
+</ui:composition>
+
 </html>

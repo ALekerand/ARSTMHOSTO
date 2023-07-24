@@ -34,7 +34,7 @@ public class TypeConsultationController {
 	@PostConstruct
 	public void initialiser() {
 		this.btnModifier.setDisabled(true);
-		genererCodeTypeConsultation();
+		typeConsultation.setCodeTypeConsultation(genererCodeTypeConsultation());
 	}
 	
 	public String genererCodeTypeConsultation() {
@@ -49,11 +49,10 @@ public class TypeConsultationController {
 		return new String(prefix+(nbEnregistrement+1));
 	}
 	public void enregistrer() {
-		
-		typeConsultation.setCodeTypeConsultation(genererCodeTypeConsultation());
 		service.addObject(typeConsultation);
 		annuler();
 		this.info("Enregistrement effectué avec succès!");
+		typeConsultation.setCodeTypeConsultation(genererCodeTypeConsultation());
 	}
 	
 	public void selectionnerLigne() {

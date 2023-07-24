@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 4 juil. 2023, 21:54:33 by Hibernate Tools 4.3.6.Final
+// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,24 +20,26 @@ import javax.persistence.Table;
 public class Medicament implements java.io.Serializable {
 
 	private Integer idMedicament;
-	private String codeMedicauent;
+	private String codeMedicament;
 	private String nomMedicament;
 	private Integer stockActuel;
 	private Integer stockAlerte;
 	private Long coutMedicament;
 	private Set<LigneAchat> ligneAchats = new HashSet<LigneAchat>(0);
+	private Set<Approvisionnement> approvisionnements = new HashSet<Approvisionnement>(0);
 
 	public Medicament() {
 	}
 
-	public Medicament(String codeMedicauent, String nomMedicament, Integer stockActuel, Integer stockAlerte,
-			Long coutMedicament, Set<LigneAchat> ligneAchats) {
-		this.codeMedicauent = codeMedicauent;
+	public Medicament(String codeMedicament, String nomMedicament, Integer stockActuel, Integer stockAlerte,
+			Long coutMedicament, Set<LigneAchat> ligneAchats, Set<Approvisionnement> approvisionnements) {
+		this.codeMedicament = codeMedicament;
 		this.nomMedicament = nomMedicament;
 		this.stockActuel = stockActuel;
 		this.stockAlerte = stockAlerte;
 		this.coutMedicament = coutMedicament;
 		this.ligneAchats = ligneAchats;
+		this.approvisionnements = approvisionnements;
 	}
 
 	@Id
@@ -52,13 +54,13 @@ public class Medicament implements java.io.Serializable {
 		this.idMedicament = idMedicament;
 	}
 
-	@Column(name = "CODE_MEDICAUENT", length = 10)
-	public String getCodeMedicauent() {
-		return this.codeMedicauent;
+	@Column(name = "CODE_MEDICAMENT", length = 10)
+	public String getCodeMedicament() {
+		return this.codeMedicament;
 	}
 
-	public void setCodeMedicauent(String codeMedicauent) {
-		this.codeMedicauent = codeMedicauent;
+	public void setCodeMedicament(String codeMedicament) {
+		this.codeMedicament = codeMedicament;
 	}
 
 	@Column(name = "NOM_MEDICAMENT", length = 100)
@@ -104,6 +106,15 @@ public class Medicament implements java.io.Serializable {
 
 	public void setLigneAchats(Set<LigneAchat> ligneAchats) {
 		this.ligneAchats = ligneAchats;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "medicament")
+	public Set<Approvisionnement> getApprovisionnements() {
+		return this.approvisionnements;
+	}
+
+	public void setApprovisionnements(Set<Approvisionnement> approvisionnements) {
+		this.approvisionnements = approvisionnements;
 	}
 
 }

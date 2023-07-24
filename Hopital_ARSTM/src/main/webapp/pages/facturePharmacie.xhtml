@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+				<fieldset>
+ 	<legend>ENREGISTREMENT DES FACURES</legend>		
+		<h:panelGrid columns="6" cellpadding="10">
+	<p:outputLabel for="input_code" value="Code facture"></p:outputLabel>
+	<p:inputText id="input_code" value="#{facturePharmacieController.facturePharmacie.codeFacturePharmacie}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+<p:outputLabel for="input_mont" value="Montant facture"></p:outputLabel>
+	<p:inputText id="input_mont" value="#{facturePharmacieController.facturePharmacie.montantFacturePharmacie}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+</h:panelGrid>
+</fieldset>
+<br />
+
+<p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" action="#{facturePharmacieController.enregistrer}" update="form" binding="#{facturePharmacieController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier"  action="#{facturePharmacieController.modifier}" update="form" binding="#{facturePharmacieController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Supprimer" action="#{facturePharmacieController.supprimer}" update="form" binding="#{facturePharmacieController.btnSupprimer}"><p:confirm header="confirmation" message="confirmez-vous la suppression?"></p:confirm></p:commandButton>
+			</f:facet>
+		</p:toolbar>
+		<br/>
+		
+		<p:dataTable  var="var" value="#{facturePharmacieController.listFacturePharmacie}"  selectionMode="single" selection="#{facturePharmacieController.selectedFacturePharmacie}" rowKey="#{var.idFacturePharmacie}">
+ 
+ <f:facet name="header"> LISTE DES FILIERES </f:facet>
+     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{facturePharmacieController.selectionnerLigne}"></p:ajax>
+   		
+   		<p:column headerText="Code facture" style="width:30%">
+        <h:outputText value="#{var.codeFacturePharmacie}"/>
+        </p:column>
+        
+        <p:column headerText="montant facture">
+        <h:outputText value="#{var.montantFacturePharmacie}"/>
+        </p:column>
+        
+        </p:dataTable>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	   </p:confirmDialog>
+	   
+		</h:form>
+	
+	</ui:define>
+
+</ui:composition>
+
+</html>

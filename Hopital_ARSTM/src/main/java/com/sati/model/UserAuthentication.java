@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 4 juil. 2023, 21:54:33 by Hibernate Tools 4.3.6.Final
+// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,6 +22,7 @@ import javax.persistence.Table;
 public class UserAuthentication implements java.io.Serializable {
 
 	private Integer userId;
+	private Medecin medecin;
 	private String username;
 	private String password;
 	private Boolean enabled;
@@ -29,14 +32,16 @@ public class UserAuthentication implements java.io.Serializable {
 	private String telephone;
 	private Set<Caisse> caisses = new HashSet<Caisse>(0);
 	private Set<Consultation> consultations = new HashSet<Consultation>(0);
+	private Set<Medecin> medecins = new HashSet<Medecin>(0);
 	private Set<UserAuthorization> userAuthorizations = new HashSet<UserAuthorization>(0);
 
 	public UserAuthentication() {
 	}
 
-	public UserAuthentication(String username, String password, Boolean enabled, String nom, String prenoms,
-			String email, String telephone, Set<Caisse> caisses, Set<Consultation> consultations,
-			Set<UserAuthorization> userAuthorizations) {
+	public UserAuthentication(Medecin medecin, String username, String password, Boolean enabled, String nom,
+			String prenoms, String email, String telephone, Set<Caisse> caisses, Set<Consultation> consultations,
+			Set<Medecin> medecins, Set<UserAuthorization> userAuthorizations) {
+		this.medecin = medecin;
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
@@ -46,6 +51,7 @@ public class UserAuthentication implements java.io.Serializable {
 		this.telephone = telephone;
 		this.caisses = caisses;
 		this.consultations = consultations;
+		this.medecins = medecins;
 		this.userAuthorizations = userAuthorizations;
 	}
 
@@ -59,6 +65,16 @@ public class UserAuthentication implements java.io.Serializable {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_MEDECIN")
+	public Medecin getMedecin() {
+		return this.medecin;
+	}
+
+	public void setMedecin(Medecin medecin) {
+		this.medecin = medecin;
 	}
 
 	@Column(name = "USERNAME", length = 15)
@@ -140,6 +156,15 @@ public class UserAuthentication implements java.io.Serializable {
 
 	public void setConsultations(Set<Consultation> consultations) {
 		this.consultations = consultations;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userAuthentication")
+	public Set<Medecin> getMedecins() {
+		return this.medecins;
+	}
+
+	public void setMedecins(Set<Medecin> medecins) {
+		this.medecins = medecins;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userAuthentication")

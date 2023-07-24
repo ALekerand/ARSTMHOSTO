@@ -10,7 +10,6 @@
 
 		<ui:composition template="/templates/template.xhtml">
 		<ui:define name="body">
-		<div style="font-size: 15px ;  padding-left: 20px; padding-right: 20px">
 			
 			<h:form id="form">
 			
@@ -18,7 +17,7 @@
 				<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 				
 		<fieldset><legend>INFORMATION SUR L'UTILISATEUR</legend>		
-<h:panelGrid columns="4" cellpadding="10">
+	<h:panelGrid columns="4" cellpadding="10">
 	
 	<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
 	<p:inputText id="input_nom" value="#{userAuthenticationController.userAuthentication.nom}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
@@ -32,13 +31,7 @@
 
 	<p:outputLabel for="input_email" value="Email:"></p:outputLabel>
 	<p:inputText id="input_email" value="#{userAuthenticationController.userAuthentication.email}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
-</h:panelGrid>
-</fieldset>
-
-		<fieldset>
- 	<legend>DETAILS DES DROITS</legend>		
-<p:panelGrid columns="8" cellpadding="5" columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4,ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
-
+	
 	<p:outputLabel for="input_login" value="Login:"></p:outputLabel>
 	<p:inputText id="input_login" value="#{userAuthenticationController.userAuthentication.username}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
 	
@@ -53,7 +46,7 @@
 		<f:selectItem itemLabel="Adminitrateur" itemValue="ROLE_ADMIN"></f:selectItem>
 		<f:selectItem itemLabel="Utilistaeur standard" itemValue="ROLE_UTILISATAEUR"></f:selectItem>
 	</p:selectOneRadio>
-</p:panelGrid>
+</h:panelGrid>
 </fieldset>
 <br/>
 <p:toolbar >
@@ -65,8 +58,7 @@
 		</p:toolbar>
 		
 		<br/>
-
-<div style="font-size: 15px ; padding-top: 15px; padding-left: 35px; padding-right: 35px">		
+	
 	<p:dataTable  var="var" value="#{userAuthenticationController.listUserAuthentication}"  selectionMode="single" selection="#{userAuthenticationController.selectedUserAuthentication}" rowKey="#{var.userId}">
  
  <f:facet name="header"> LISTE DES UTILISATEURS </f:facet>
@@ -88,11 +80,9 @@
         <p:column headerText="Email">
         <h:outputText value="#{var.email}"/>
         </p:column>
-        
-     
-        
+
         </p:dataTable>
-					</div>
+				
 		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 	   <p:commandButton value="Oui" type="button"
 	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
@@ -102,7 +92,6 @@
 	   </p:confirmDialog>
 	 
 		</h:form>
-		  	</div>
 		</ui:define>
 	</ui:composition>
 </body> 

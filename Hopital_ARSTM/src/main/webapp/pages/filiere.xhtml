@@ -5,69 +5,61 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"> 
 
-<h:head></h:head> 
-<body> 
 
 <ui:composition template="/templates/template.xhtml">
-			
-			<ui:define name="body">
-			<div style="font-size: 15px ;  padding-left: 20px; padding-right: 20px">
-			
-			<h:form id="form">
-			
-			<p:messages autoUpdate="true" closable="true" showDetail="false"></p:messages>
-			
-			<p:panel header="ENREGISTREMENT DES FILIERES" style="text-align:center ; padding:20px; color:blue;" >
-	<h:panelGrid  columns="4" cellspacing="15" style="margin: 15px;">
-	
-	
-		<h:outputLabel value="code filière "></h:outputLabel>
-	     <h:inputText value="#{filiereController.filiere.codeFiliere}"></h:inputText>
-	     
-	     <h:outputLabel value="Libelle filière "></h:outputLabel>
-	     <h:inputText value="#{filiereController.filiere.libelleFiliere}"></h:inputText>
-	     
-<!-- binding permet de faire un lien -->
-	   
-	  </h:panelGrid>
-	  <p:toolbar>
-	         <f:facet name="left">
-	             <p:commandButton  value="Enregistrer"  actionListener="#{filiereController.enregistrer}" update="form" binding="#{filiereController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-	             <p:commandButton  value="Modifier" actionListener="#{filièreController.modifier}" update="form" binding="#{filiereController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-	             <p:commandButton value="Supprimer" actionListener="#{filiereController.supprimer}" update="form" binding="#{filiereController.btnSupprimer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>  
-	         </f:facet>
-	   </p:toolbar>
-	  </p:panel>
-	 
-	  <br/>
-	
-	  	  <div style="font-size: 15px ; padding-top: 15px; padding-left: 35px; padding-right: 35px">
-	  <p:dataTable var="var" value="#{filiereController.listFiliere}"   selectionMode="single" selection="#{filiereController.selectedObject}" rowKey="#{var.idFiliere}">
-	  <f:facet name="header">LISTES DES FILIERES</f:facet>
-	  <p:ajax event="rowSelect" listener="#{filiereController.selectionnerLigne}" update="form" ></p:ajax>
-	     
-	     <p:column headerText="Code fiière" >
-	     <h:outputText value="#{var.codeFiliere}" />
-	    </p:column>
-	     <p:column headerText="Libelle filière" >
-	     <h:outputText value="#{var.libelleFiliere}" />
-	     </p:column>
-	     
-	   </p:dataTable>
-	   </div>
-	   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+				<fieldset>
+ 	<legend>ENREGISTREMENT DES FILIERES</legend>		
+		<h:panelGrid columns="6" cellpadding="10">
+	<p:outputLabel for="input_code" value="Code filiere"></p:outputLabel>
+	<p:inputText id="input_code" value="#{filiereController.filiere.codeFiliere}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+<p:outputLabel for="input_lib" value="Libéllé filiere"></p:outputLabel>
+	<p:inputText id="input_lib" value="#{filiereController.filiere.libelleFiliere}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+</h:panelGrid>
+</fieldset>
+<br />
+
+<p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" action="#{filiereController.enregistrer}" update="form" binding="#{filiereController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier"  action="#{filiereController.modifier}" update="form" binding="#{filiereController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Supprimer" action="#{filiereController.supprimer}" update="form" binding="#{filiereController.btnSupprimer}"><p:confirm header="confirmation" message="confirmez-vous la suppression?"></p:confirm></p:commandButton>
+			</f:facet>
+		</p:toolbar>
+		<br/>
+		
+		<p:dataTable  var="var" value="#{filiereController.listFiliere}"  selectionMode="single" selection="#{filiereController.selectedObject}" rowKey="#{var.idFiliere}">
+ 
+ <f:facet name="header"> LISTE DES FILIERES </f:facet>
+     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{filiereController.selectionnerLigne}"></p:ajax>
+   		
+   		<p:column headerText="Code filiere" style="width:30%">
+        <h:outputText value="#{var.codeFiliere}"/>
+        </p:column>
+        
+        <p:column headerText="Libellé filiere">
+        <h:outputText value="#{var.libelleFiliere}"/>
+        </p:column>
+        
+        </p:dataTable>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 	   <p:commandButton value="Oui" type="button"
 	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
 	   </p:commandButton>
 	   <p:commandButton value="Non" type="button"
 	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
 	   </p:commandButton>
-	   
 	   </p:confirmDialog>
-	  
-      </h:form>
-      </div>
-      </ui:define>
-     </ui:composition>
-</body> 
+	   
+		</h:form>
+	
+	</ui:define>
+
+</ui:composition>
+
 </html>

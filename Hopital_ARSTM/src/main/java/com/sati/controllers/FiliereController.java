@@ -32,6 +32,7 @@ public class FiliereController {
 	@PostConstruct
 	public void initialiser() {
 		this.btnModifier.setDisabled(true);
+		filiere.setCodeFiliere(genererCodeFiliere());
 	}
 	public String genererCodeFiliere() {
 		String prefix="";
@@ -46,37 +47,39 @@ public class FiliereController {
 	}
 	
 	public void enregistrer() {
-		filiere.setCodeFiliere(genererCodeFiliere());
-		service.addObject(filiere);
+		this.service.addObject(this.filiere);
+		info("Enregistrement effectué avec succès!");
 		annuler();
-		this.info("Enregistrement effectué avec succès!");
+		filiere.setCodeFiliere(genererCodeFiliere());
 		
 	}
 	
 	public void selectionnerLigne() {
-		this.filiere = this.selectedObject;
+		setFiliere(selectedObject);
 		this.btnEnregistrer.setDisabled(true);
 		this.btnModifier.setDisabled(false);
 	}
 	public void modifier() {
-		this.service.updateObject(filiere);
+		this.service.updateObject(this.filiere);
+		info("Modification effectuée avec succès!");
 		annuler();
-		this.info("Modification effectuée avec succès!");
 	}
 	
 	public void info(String monMessage) {
-		FacesContext.getCurrentInstance().addMessage((String) null, new FacesMessage(FacesMessage.SEVERITY_INFO, monMessage,null ));
+		FacesContext.getCurrentInstance().addMessage((String) null, 
+				new FacesMessage(FacesMessage.SEVERITY_INFO, monMessage,null ));
 	}
 
 	public void supprimer() {
-		this.service.deleteObject(filiere);
-		annuler();
+		this.service.deleteObject(this.filiere);
 		this.info("Suppression effectuée avec succès!");
+		annuler();
 	}
 	
 	public void annuler() {
-		filiere.setCodeFiliere(genererCodeFiliere());
+		filiere.setCodeFiliere(null);
 		filiere.setLibelleFiliere(null);
+		this.info("Annulation effectuée avec succès!");
 	}
 	public Filiere getFiliere() {
 		return filiere;

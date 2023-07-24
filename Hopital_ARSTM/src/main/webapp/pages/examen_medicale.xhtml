@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+				<fieldset>
+ 	<legend>ENREGISTREMENT DES EXAMENS MEDICALS</legend>		
+		<h:panelGrid columns="6" cellpadding="10">
+	<p:outputLabel for="input_code" value="Code examen"></p:outputLabel>
+	<p:inputText id="input_code" value="#{examenController.examen.codeExamen}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+	<p:outputLabel for="input_nom" value="Nom examen"></p:outputLabel>
+	<p:inputText id="input_nom" value="#{examenController.examen.nomExamen}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+	<p:outputLabel for="input_cout" value="Cout examen"></p:outputLabel>
+	<p:inputText id="input_cout" value="#{examenController.examen.cout}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	
+</h:panelGrid>
+</fieldset>
+<br />
+
+<p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" action="#{examenController.enregistrer}" update="form" binding="#{examenController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier"  action="#{examenController.modifier}" update="form" binding="#{examenController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" action="#{examenController.annuler}" update="form" binding="#{examenController.btnAnnuler}"><p:confirm header="confirmation" message="confirmez-vous l'annulation?"></p:confirm></p:commandButton>
+			</f:facet>
+		</p:toolbar>
+		<br/>
+		
+		<p:dataTable  var="var" value="#{examenController.listExamen}"  selectionMode="single" selection="#{examenController.selectedExamen}" rowKey="#{var.idExamen}">
+ 
+ <f:facet name="header"> LISTE DES EXAMENS MEDICALS </f:facet>
+     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{examenController.selectionnerLigne}"></p:ajax>
+   		
+   		<p:column headerText="Code examen" style="width:30%">
+        <h:outputText value="#{var.codeExamen}"/>
+        </p:column>
+        
+        <p:column headerText="Nom examen">
+        <h:outputText value="#{var.nomExamen}"/>
+        </p:column>
+        
+        <p:column headerText="Coût examen">
+        <h:outputText value="#{var.cout}"/>
+        </p:column>
+        
+        </p:dataTable>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	   </p:confirmDialog>
+	   
+		</h:form>
+	
+	</ui:define>
+
+</ui:composition>
+</html>

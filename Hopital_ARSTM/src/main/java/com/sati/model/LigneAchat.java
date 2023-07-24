@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 4 juil. 2023, 21:54:33 by Hibernate Tools 4.3.6.Final
+// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ public class LigneAchat implements java.io.Serializable {
 	private Medicament medicament;
 	private Patient patient;
 	private String codeAchat;
-	private Integer quantiteMedicauent;
+	private Integer quantiteMedicament;
 	private Date dateAchat;
 
 	public LigneAchat() {
@@ -38,12 +38,12 @@ public class LigneAchat implements java.io.Serializable {
 	}
 
 	public LigneAchat(FacturePharmacie facturePharmacie, Medicament medicament, Patient patient, String codeAchat,
-			Integer quantiteMedicauent, Date dateAchat) {
+			Integer quantiteMedicament, Date dateAchat) {
 		this.facturePharmacie = facturePharmacie;
 		this.medicament = medicament;
 		this.patient = patient;
 		this.codeAchat = codeAchat;
-		this.quantiteMedicauent = quantiteMedicauent;
+		this.quantiteMedicament = quantiteMedicament;
 		this.dateAchat = dateAchat;
 	}
 
@@ -98,13 +98,13 @@ public class LigneAchat implements java.io.Serializable {
 		this.codeAchat = codeAchat;
 	}
 
-	@Column(name = "QUANTITE_MEDICAUENT")
-	public Integer getQuantiteMedicauent() {
-		return this.quantiteMedicauent;
+	@Column(name = "QUANTITE_MEDICAMENT")
+	public Integer getQuantiteMedicament() {
+		return this.quantiteMedicament;
 	}
 
-	public void setQuantiteMedicauent(Integer quantiteMedicauent) {
-		this.quantiteMedicauent = quantiteMedicauent;
+	public void setQuantiteMedicament(Integer quantiteMedicament) {
+		this.quantiteMedicament = quantiteMedicament;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

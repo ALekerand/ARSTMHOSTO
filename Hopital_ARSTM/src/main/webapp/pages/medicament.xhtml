@@ -5,90 +5,81 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"> 
 
-<h:head></h:head> 
-<body> 
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+				<fieldset>
+ 	<legend>ENREGISTREMENT DES GENRES</legend>		
+		<h:panelGrid columns="6" cellpadding="10">
+	<p:outputLabel for="input_code" value="Code medicament"></p:outputLabel>
+	<p:inputText id="input_code" value="#{medicamentController.medicament.codeMedicauent}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
 
+	<p:outputLabel for="input_nom" value="nom medicament"></p:outputLabel>
+	<p:inputText id="input_nom" value="#{medicamentController.medicament.nomMedicament}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
 	
-	<ui:composition template="/templates/template.xhtml">
-			
-			<ui:define name="body">
-			<div style="font-size: 15px ;  padding-left: 20px; padding-right: 20px">
-			
-			<h:form id="form">
-			<p:messages autoUpdate="true" closable="true" showDetail="false"></p:messages>
-			<p:panel header="ENREGISTREMENT DES MEDICAMENTS" style="text-align:center ; padding:20px;" >
-	<h:panelGrid  columns="4" cellspacing="15"  style="margin: 15px;">
+	<p:outputLabel for="input_stockAC" value="Stock actuel"></p:outputLabel>
+	<p:inputText id="input_stockAC" value="#{medicamentController.medicament.stockActuel}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
 	
-		 <h:outputLabel value="Code medicament"></h:outputLabel>
-	     <h:inputText value="#{medicamentController.medicament.codeMedicauent}"></h:inputText>
-	     
-		 <h:outputLabel value="Nom medicament"></h:outputLabel>
-	     <h:inputText value="#{medicamentController.medicament.nomMedicament}"></h:inputText>
+	<p:outputLabel for="input_stockAL" value="Stock alert"></p:outputLabel>
+	<p:inputText id="input_stockAL" value="#{medicamentController.medicament.stockAlerte}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
 	
-	     <h:outputLabel value="Stock actuel"></h:outputLabel>
-	     <h:inputText value="#{medicamentController.stockActuel}"></h:inputText>
-	     
-	     <h:outputLabel value="Stock alert"></h:outputLabel>
-	     <h:inputText value="#{medicamentController.stockAlerte}"></h:inputText>
-	     
-	     <h:outputLabel value="Cout medicament"></h:outputLabel>
-	     <h:inputText value="#{medicamentController.medicament.coutMedicament}"></h:inputText>
-	     
-	     
-	     
-<!-- binding permet de faire un lien -->
-	   
-	  </h:panelGrid>
-	  <p:toolbar>
-	         <f:facet name="left">
-	             <p:commandButton  value="Enregistrer" actionListener="#{medicamentController.enregistrer}" update="form" binding="#{medicamentController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-	             <p:commandButton  value="Modifier" actionListener="#{medicamentController.modifier}" update="form" binding="#{medicamentController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
-	             <p:commandButton value="Supprimer" actionListener="#{medicamentController.supprimer}" update="form" binding="#{medicamentController.btnSupprimer}"><p:confirm header="confirmation" message="confirmez-vous la suppression?"></p:confirm></p:commandButton>  
-	         </f:facet>
-	   </p:toolbar>
-	  </p:panel>
-	 
-	  <br/>
-	
-	   <div style="font-size: 15px ; padding-top: 15px; padding-left: 35px; padding-right: 35px">
-	  <p:dataTable var="var"  value="#{medicamentController.listMedicament}"  selectionMode="single" selection="#{medicamentController.selectedMedicament}" rowKey="#{var.idMedicament}">
-	  <f:facet name="header">LISTES DES MEDICAMENTS</f:facet>
-	  <p:ajax event="rowSelect" listener="#{medicamentController.selectionnerLigne}" update="form" ></p:ajax>
-	     
-	     <p:column headerText="Code medicament" >
-	     <h:outputText value="#{var.codeMedicauent}" />
-	    </p:column>
-	     <p:column headerText="Nom medicament" >
-	     <h:outputText value="#{var.nomMedicament}" />
-	     </p:column>
-	     
-	     <p:column headerText="Stock actuel" >
-	     <h:outputText value="#{var.stockActuel}" />
-	     </p:column>
-	     
-	     <p:column headerText="Stock alert" >
-	     <h:outputText value="#{var.stockAlerte}" />
-	     </p:column>
-	     
-	     <p:column headerText="cout medicament" >
-	     <h:outputText value="#{var.coutMedicament}" />
-	     </p:column>
-	   </p:dataTable>
-	   </div>
-	   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	<p:outputLabel for="input_cout" value="cout medicament"></p:outputLabel>
+	<p:inputText id="input_cout" value="#{medicamentController.medicament.coutMedicament}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+</h:panelGrid>
+</fieldset>
+<br />
+
+<p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" action="#{medicamentController.enregistrer}" update="form" binding="#{medicamentController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier"  action="#{medicamentController.modifier}" update="form" binding="#{medicamentController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Supprimer" action="#{medicamentController.supprimer}" update="form" binding="#{medicamentController.btnSupprimer}"><p:confirm header="confirmation" message="confirmez-vous la suppression?"></p:confirm></p:commandButton>
+			</f:facet>
+		</p:toolbar>
+		<br/>
+		
+		<p:dataTable  var="var" value="#{medicamentController.listMedicament}"  selectionMode="single" selection="#{medicamentController.selectedMedicament}" rowKey="#{var.idMedicament}">
+ 
+ <f:facet name="header"> LISTE DES GENRES </f:facet>
+     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{medicamentController.selectionnerLigne}"></p:ajax>
+   		
+   		<p:column headerText="Code medicament" style="width:30%">
+        <h:outputText value="#{var.codeMedicauent}"/>
+        </p:column>
+        
+        <p:column headerText="Nom medicament">
+        <h:outputText value="#{var.nomMedicament}"/>
+        </p:column>
+        
+        <p:column headerText="Stock actuel">
+        <h:outputText value="#{var.stockActuel}"/>
+        </p:column>
+        
+        <p:column headerText="Stock alert">
+        <h:outputText value="#{var.stockAlerte}"/>
+        </p:column>
+        
+        <p:column headerText="Cout medicament">
+        <h:outputText value="#{var.coutMedicament}"/>
+        </p:column>
+        
+        </p:dataTable>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 	   <p:commandButton value="Oui" type="button"
 	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
 	   </p:commandButton>
 	   <p:commandButton value="Non" type="button"
 	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
 	   </p:commandButton>
-	   
 	   </p:confirmDialog>
-	  
-      </h:form>
-      </div>
-	</ui:define>	
+	   
+		</h:form>
 	
-	</ui:composition>
-</body> 
+	</ui:define>
+
+</ui:composition>
+
 </html>

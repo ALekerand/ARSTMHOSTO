@@ -5,70 +5,61 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"> 
 
-<h:head></h:head> 
-<body> 
 
-	
-	<ui:composition template="/templates/template.xhtml">
-			
-			<ui:define name="body">
-			<div style="font-size: 15px ;  padding-left: 20px; padding-right: 20px">
-			
-			<h:form id="form">
-			<p:messages autoUpdate="true" closable="true" showDetail="false"></p:messages>
-			<p:panel header="ENREGISTREMENT DES SERVICES" style="text-align:center ; padding:20px;" >
-	<h:panelGrid  columns="4" cellspacing="15"  style="margin: 15px;">
-	
-		 <h:outputLabel value="Libelle service"></h:outputLabel>
-	     <h:inputText value="#{serviceController.services.codeService}"></h:inputText>
-	
-	     <h:outputLabel value="Libelle service"></h:outputLabel>
-	     <h:inputText value="#{serviceController.services.libelleService}"></h:inputText>
-	     
-	     
-	     
-<!-- binding permet de faire un lien -->
-	   
-	  </h:panelGrid>
-	  <p:toolbar>
-	         <f:facet name="left">
-	             <p:commandButton  value="Enregistrer" actionListener="#{serviceController.enregistrer}" update="form" binding="#{serviceController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-	             <p:commandButton  value="Modifier" actionListener="#{serviceController.modifier}" update="form" binding="#{serviceController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
-	             <p:commandButton value="Supprimer" actionListener="#{serviceController.supprimer}" update="form" binding="#{serviceController.btnSupprimer}"><p:confirm header="confirmation" message="confirmez-vous la suppression?"></p:confirm></p:commandButton>  
-	         </f:facet>
-	   </p:toolbar>
-	  </p:panel>
-	 
-	  <br/>
-	
-	   <div style="font-size: 15px ; padding-top: 15px; padding-left: 35px; padding-right: 35px">
-	  <p:dataTable var="var"  value="#{serviceController.listService}"  selectionMode="single" selection="#{serviceController.selectedService}" rowKey="#{var.idService}">
-	  <f:facet name="header">LISTES DES SERVICES</f:facet>
-	  <p:ajax event="rowSelect" listener="#{serviceController.selectionnerLigne}" update="form" ></p:ajax>
-	     
-	     <p:column headerText="Code service" >
-	     <h:outputText value="#{var.codeService}" />
-	    </p:column>
-	     <p:column headerText="Libelle service" >
-	     <h:outputText value="#{var.libelleService}" />
-	     </p:column>
-	     
-	   </p:dataTable>
-	   </div>
-	   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+				<fieldset>
+ 	<legend>ENREGISTREMENT DES SERVICES</legend>		
+		<h:panelGrid columns="6" cellpadding="10">
+	<p:outputLabel for="input_code" value="Code service"></p:outputLabel>
+	<p:inputText id="input_code" value="#{serviceController.services.codeService}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+<p:outputLabel for="input_lib" value="Libéllé genre"></p:outputLabel>
+	<p:inputText id="input_lib" value="#{serviceController.services.libelleService}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+</h:panelGrid>
+</fieldset>
+<br />
+
+<p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" action="#{serviceController.enregistrer}" update="form" binding="#{serviceController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier"  action="#{serviceController.modifier}" update="form" binding="#{serviceController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Supprimer" action="#{serviceController.supprimer}" update="form" binding="#{serviceController.btnSupprimer}"><p:confirm header="confirmation" message="confirmez-vous la suppression?"></p:confirm></p:commandButton>
+			</f:facet>
+		</p:toolbar>
+		<br/>
+		
+		<p:dataTable  var="var" value="#{serviceController.listService}"  selectionMode="single" selection="#{serviceController.selectedService}" rowKey="#{var.idService}">
+ 
+ <f:facet name="header"> LISTE DES SERVICES </f:facet>
+     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{serviceController.selectionnerLigne}"></p:ajax>
+   		
+   		<p:column headerText="Code service" style="width:30%">
+        <h:outputText value="#{var.codeService}"/>
+        </p:column>
+        
+        <p:column headerText="Libellé service">
+        <h:outputText value="#{var.libelleService}"/>
+        </p:column>
+        
+        </p:dataTable>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 	   <p:commandButton value="Oui" type="button"
 	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
 	   </p:commandButton>
 	   <p:commandButton value="Non" type="button"
 	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
 	   </p:commandButton>
-	   
 	   </p:confirmDialog>
-	  
-      </h:form>
-      </div>
-	</ui:define>	
+	   
+		</h:form>
 	
-	</ui:composition>
-</body> 
+	</ui:define>
+
+</ui:composition>
+
 </html>

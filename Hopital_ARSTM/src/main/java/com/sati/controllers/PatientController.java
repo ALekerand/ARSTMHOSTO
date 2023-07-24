@@ -54,7 +54,7 @@ public class PatientController {
 	@PostConstruct
 	public void initialiser() {
 		this.btnModifier.setDisabled(true);
-		genererCodePatient();
+		patient.setCodePatient(genererCodePatient());
 	}
 	
 	public String genererCodePatient() {
@@ -72,12 +72,8 @@ public class PatientController {
 	public void enregistrer() {
 		
 		genre = (Genre) service.getObjectById(idGenre, "Genre");
-		patient.setGenre(genre);
-		patient.setCodePatient(getCodePatient());
-		patient.setPrenomPatient(prenomPatient);
-		patient.setNomPatient(nomPatient);
-		patient.setTelephonePatient(telephonePatient);
-		service.addObject(patient);
+		patient.setGenre(genre);;
+		this.service.addObject(patient);
 		filiere = (Filiere) service.getObjectById(idFiliere, "Filiere");
 		etudiant.setPatient(patient);
 		etudiant.setFiliere(filiere);
@@ -98,12 +94,14 @@ public class PatientController {
 		this.service.addObject(personnel);
 		annuler();
 		info("Enregistrement effectué avec succès!");
+		patient.setCodePatient(genererCodePatient());
 		
 		
 		
 	}
 	public void info(String monMessage) {
-		FacesContext.getCurrentInstance().addMessage((String) null, new FacesMessage(FacesMessage.SEVERITY_INFO, monMessage,null ));
+		FacesContext.getCurrentInstance().addMessage((String) null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, monMessage,null ));
 	}
 	
 	public void annuler() {
@@ -111,6 +109,12 @@ public class PatientController {
 		patient.setNomPatient(null);
 		patient.setPrenomPatient(null);
 		patient.setTelephonePatient(null);
+	}
+	
+	public void modifier() {
+		this.service.updateObject(patient);
+		annuler();
+		this.info("Modification effectuée avec succès!");
 	}
 	public Patient getPatient() {
 		return patient;

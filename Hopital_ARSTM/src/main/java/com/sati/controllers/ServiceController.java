@@ -34,7 +34,7 @@ public class ServiceController {
 	@PostConstruct
 	public void initialiser() {
 		this.btnModifier.setDisabled(true);
-		genererCodeService();
+		services.setCodeService(genererCodeService());
 	}
 	
 	public String genererCodeService() {
@@ -51,10 +51,10 @@ public class ServiceController {
 	}
 	
 	public void enregistrer() {
-		services.setCodeService(genererCodeService());
 		this.service.addObject(services);
 		annuler();
 		info("Enregistrement effectué avec succès!");
+		services.setCodeService(genererCodeService());
 	}
 	
 	

@@ -32,7 +32,7 @@ public class GenreController {
 	@PostConstruct
 	public void initialiser() {
 		this.btnModifier.setDisabled(true);
-		genererCodeGenre();
+		genre.setCodeGenre(genererCodeGenre());
 	}
 	
 	public String genererCodeGenre() {
@@ -47,10 +47,10 @@ public class GenreController {
 		return new String(prefix+(nbEnregistrement+1));
 	}
 	public void enregistrer() {
-		genre.setCodeGenre(genererCodeGenre());
 		this.service.addObject(genre);
 		annuler();
 		this.info("Enregistrement effectué avec succès!");
+		genre.setCodeGenre(genererCodeGenre());
 		
 	}
 	

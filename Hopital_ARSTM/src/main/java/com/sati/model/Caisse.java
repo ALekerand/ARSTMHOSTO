@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 4 juil. 2023, 21:54:33 by Hibernate Tools 4.3.6.Final
+// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,33 +27,39 @@ public class Caisse implements java.io.Serializable {
 	private Integer idCaisse;
 	private Consultation consultation;
 	private FacturePharmacie facturePharmacie;
+	private Realiser realiser;
 	private UserAuthentication userAuthentication;
 	private String codeCaisse;
 	private Long montantCaisse;
 	private Date dateEnregistrement;
 	private Set<Consultation> consultations = new HashSet<Consultation>(0);
 	private Set<FacturePharmacie> facturePharmacies = new HashSet<FacturePharmacie>(0);
+	private Set<Realiser> realisers = new HashSet<Realiser>(0);
 
 	public Caisse() {
 	}
 
-	public Caisse(Consultation consultation, FacturePharmacie facturePharmacie, UserAuthentication userAuthentication) {
+	public Caisse(Consultation consultation, FacturePharmacie facturePharmacie, Realiser realiser,
+			UserAuthentication userAuthentication) {
 		this.consultation = consultation;
 		this.facturePharmacie = facturePharmacie;
+		this.realiser = realiser;
 		this.userAuthentication = userAuthentication;
 	}
 
-	public Caisse(Consultation consultation, FacturePharmacie facturePharmacie, UserAuthentication userAuthentication,
-			String codeCaisse, Long montantCaisse, Date dateEnregistrement, Set<Consultation> consultations,
-			Set<FacturePharmacie> facturePharmacies) {
+	public Caisse(Consultation consultation, FacturePharmacie facturePharmacie, Realiser realiser,
+			UserAuthentication userAuthentication, String codeCaisse, Long montantCaisse, Date dateEnregistrement,
+			Set<Consultation> consultations, Set<FacturePharmacie> facturePharmacies, Set<Realiser> realisers) {
 		this.consultation = consultation;
 		this.facturePharmacie = facturePharmacie;
+		this.realiser = realiser;
 		this.userAuthentication = userAuthentication;
 		this.codeCaisse = codeCaisse;
 		this.montantCaisse = montantCaisse;
 		this.dateEnregistrement = dateEnregistrement;
 		this.consultations = consultations;
 		this.facturePharmacies = facturePharmacies;
+		this.realisers = realisers;
 	}
 
 	@Id
@@ -86,6 +92,16 @@ public class Caisse implements java.io.Serializable {
 
 	public void setFacturePharmacie(FacturePharmacie facturePharmacie) {
 		this.facturePharmacie = facturePharmacie;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_REALISER", nullable = false)
+	public Realiser getRealiser() {
+		return this.realiser;
+	}
+
+	public void setRealiser(Realiser realiser) {
+		this.realiser = realiser;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -142,6 +158,15 @@ public class Caisse implements java.io.Serializable {
 
 	public void setFacturePharmacies(Set<FacturePharmacie> facturePharmacies) {
 		this.facturePharmacies = facturePharmacies;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "caisse")
+	public Set<Realiser> getRealisers() {
+		return this.realisers;
+	}
+
+	public void setRealisers(Set<Realiser> realisers) {
+		this.realisers = realisers;
 	}
 
 }

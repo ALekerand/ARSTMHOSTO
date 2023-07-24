@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 4 juil. 2023, 21:54:33 by Hibernate Tools 4.3.6.Final
+// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,14 +22,16 @@ public class Genre implements java.io.Serializable {
 	private Integer idGenre;
 	private String codeGenre;
 	private String libelleGenre;
+	private Set<Medecin> medecins = new HashSet<Medecin>(0);
 	private Set<Patient> patients = new HashSet<Patient>(0);
 
 	public Genre() {
 	}
 
-	public Genre(String codeGenre, String libelleGenre, Set<Patient> patients) {
+	public Genre(String codeGenre, String libelleGenre, Set<Medecin> medecins, Set<Patient> patients) {
 		this.codeGenre = codeGenre;
 		this.libelleGenre = libelleGenre;
+		this.medecins = medecins;
 		this.patients = patients;
 	}
 
@@ -61,6 +63,15 @@ public class Genre implements java.io.Serializable {
 
 	public void setLibelleGenre(String libelleGenre) {
 		this.libelleGenre = libelleGenre;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
+	public Set<Medecin> getMedecins() {
+		return this.medecins;
+	}
+
+	public void setMedecins(Set<Medecin> medecins) {
+		this.medecins = medecins;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")

@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 4 juil. 2023, 21:54:33 by Hibernate Tools 4.3.6.Final
+// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -26,6 +26,7 @@ public class Consultation implements java.io.Serializable {
 
 	private Integer idConsultation;
 	private Caisse caisse;
+	private Medecin medecin;
 	private Patient patient;
 	private TypeConsultation typeConsultation;
 	private UserAuthentication userAuthentication;
@@ -43,10 +44,11 @@ public class Consultation implements java.io.Serializable {
 		this.userAuthentication = userAuthentication;
 	}
 
-	public Consultation(Caisse caisse, Patient patient, TypeConsultation typeConsultation,
+	public Consultation(Caisse caisse, Medecin medecin, Patient patient, TypeConsultation typeConsultation,
 			UserAuthentication userAuthentication, String codeConsultation, Date dateConsultation, String observation,
 			Set<Caisse> caisses) {
 		this.caisse = caisse;
+		this.medecin = medecin;
 		this.patient = patient;
 		this.typeConsultation = typeConsultation;
 		this.userAuthentication = userAuthentication;
@@ -76,6 +78,16 @@ public class Consultation implements java.io.Serializable {
 
 	public void setCaisse(Caisse caisse) {
 		this.caisse = caisse;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_MEDECIN")
+	public Medecin getMedecin() {
+		return this.medecin;
+	}
+
+	public void setMedecin(Medecin medecin) {
+		this.medecin = medecin;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

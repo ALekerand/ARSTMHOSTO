@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 4 juil. 2023, 21:54:33 by Hibernate Tools 4.3.6.Final
+// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +29,7 @@ public class Patient implements java.io.Serializable {
 	private String prenomPatient;
 	private String telephonePatient;
 	private PersonnelArstm personnelArstm;
+	private Set<Realiser> realisers = new HashSet<Realiser>(0);
 	private Set<LigneAchat> ligneAchats = new HashSet<LigneAchat>(0);
 	private EtudiantArstm etudiantArstm;
 	private Set<Consultation> consultations = new HashSet<Consultation>(0);
@@ -41,14 +42,15 @@ public class Patient implements java.io.Serializable {
 	}
 
 	public Patient(Genre genre, String codePatient, String nomPatient, String prenomPatient, String telephonePatient,
-			PersonnelArstm personnelArstm, Set<LigneAchat> ligneAchats, EtudiantArstm etudiantArstm,
-			Set<Consultation> consultations) {
+			PersonnelArstm personnelArstm, Set<Realiser> realisers, Set<LigneAchat> ligneAchats,
+			EtudiantArstm etudiantArstm, Set<Consultation> consultations) {
 		this.genre = genre;
 		this.codePatient = codePatient;
 		this.nomPatient = nomPatient;
 		this.prenomPatient = prenomPatient;
 		this.telephonePatient = telephonePatient;
 		this.personnelArstm = personnelArstm;
+		this.realisers = realisers;
 		this.ligneAchats = ligneAchats;
 		this.etudiantArstm = etudiantArstm;
 		this.consultations = consultations;
@@ -66,7 +68,7 @@ public class Patient implements java.io.Serializable {
 		this.idPatient = idPatient;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_GENRE", nullable = false)
 	public Genre getGenre() {
 		return this.genre;
@@ -119,6 +121,15 @@ public class Patient implements java.io.Serializable {
 
 	public void setPersonnelArstm(PersonnelArstm personnelArstm) {
 		this.personnelArstm = personnelArstm;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
+	public Set<Realiser> getRealisers() {
+		return this.realisers;
+	}
+
+	public void setRealisers(Set<Realiser> realisers) {
+		this.realisers = realisers;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")

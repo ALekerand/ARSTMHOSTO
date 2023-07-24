@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+				<fieldset>
+ 	<legend>ENREGISTREMENT DES MEDECINS</legend>		
+		<h:panelGrid columns="6" cellpadding="10">
+	<p:outputLabel for="input_code" value="Code du medecin"></p:outputLabel>
+	<p:inputText id="input_code" value="#{medecinController.medecin.codeMedecin}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+
+	<p:outputLabel for="input_nom" value="Nom du medecin"></p:outputLabel>
+	<p:inputText id="input_nom" value="#{medecinController.medecin.nomMedecin}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	
+	<p:outputLabel for="input_prenom" value="Prenoms du medecin"></p:outputLabel>
+	<p:inputText id="input_prenom" value="#{medecinController.medecin.prenomsMedecin}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	
+	<p:outputLabel for="input_tel" value="Telephone du medecin"></p:outputLabel>
+	<p:inputText id="input_tel" value="#{medecinController.medecin.telephoneMedecin}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	
+	<p:outputLabel for="input_email" value="Email du medecin"></p:outputLabel>
+	<p:inputText id="input_email" value="#{medecinController.medecin.emailMedecin}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	
+	 <h:outputLabel value="Speciliaté"></h:outputLabel>
+	     <p:selectOneMenu value="#{medecinController.idSpecialite}" >
+	        <f:selectItem itemLabel="Selectionner" itemValue=""></f:selectItem>	
+	        <f:selectItems value="#{medecinController.listSpecialite}" var="tata" itemLabel="#{tata.libelleSpecialite}" itemValue="#{tata.idSpecialite}"></f:selectItems>	
+	 	 </p:selectOneMenu>
+	 	 
+ 	<h:outputLabel value="Genre"></h:outputLabel>
+	     <p:selectOneMenu value="#{medecinController.idGenre}" >
+	        <f:selectItem itemLabel="Selectionner" itemValue=""></f:selectItem>	
+	        <f:selectItems value="#{medecinController.listGenre}" var="tata" itemLabel="#{tata.libelleGenre}" itemValue="#{tata.idGenre}"></f:selectItems>	
+	 	 </p:selectOneMenu>
+</h:panelGrid>
+</fieldset>
+<br />
+
+<p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" action="#{medecinController.enregistrer}" update="form" binding="#{medecinController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier"  action="#{medecinController.modifier}" update="form" binding="#{medecinController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" action="#{medecinController.annuler}" update="form" binding="#{medecinController.btnAnnuler}"><p:confirm header="confirmation" message="confirmez-vous la suppression?"></p:confirm></p:commandButton>
+			</f:facet>
+		</p:toolbar>
+		<br/>
+		
+		<p:dataTable  var="var" value="#{medecinController.listMedecin}"  selectionMode="single" selection="#{medecinController.selectedMedecin}" rowKey="#{var.idMedecin}">
+ 
+ <f:facet name="header"> LISTE DES MEDECINS </f:facet>
+     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{medecinController.selectionnerLigne}"></p:ajax>
+   		
+   		<p:column headerText="Code du medecin" style="width:10%">
+        <h:outputText value="#{var.codeMedecin}"/>
+        </p:column>
+        
+        <p:column headerText="Nom du medecin">
+        <h:outputText value="#{var.nomMedecin}"/>
+        </p:column>
+        
+         <p:column headerText="Prenoms du medecin">
+        <h:outputText value="#{var.prenomsMedecin}"/>
+        </p:column>
+        
+         <p:column headerText="Telephone du medecin">
+        <h:outputText value="#{var.telephoneMedecin}"/>
+        </p:column>
+        
+         <p:column headerText="Email du medecin">
+        <h:outputText value="#{var.emailMedecin}"/>
+        </p:column>
+        
+         <p:column headerText="Spécialité">
+        <h:outputText value="#{var.specialite.libelleSpecialite}"/>
+        </p:column>
+        
+         <p:column headerText="Genre">
+        <h:outputText value="#{var.genre.libelleGenre}"/>
+        </p:column>
+        
+        </p:dataTable>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	   </p:confirmDialog>
+	   
+		</h:form>
+	
+	</ui:define>
+
+</ui:composition>
+
+
+</html>

@@ -25,8 +25,6 @@ public class MedicamentController {
 	private Medicament medicament = new Medicament();
 	private List<Medicament> listMedicament = new ArrayList<Medicament>();
 	private Medicament selectedMedicament;
-	private int stockActuel;
-	private int stockAlerte;
 	
 	
 	private CommandButton btnEnregistrer = new CommandButton();
@@ -37,7 +35,7 @@ public class MedicamentController {
 	@PostConstruct
 	public void initialiser() {
 		this.btnModifier.setDisabled(true);
-		genererCodeMedicament();
+		medicament.setCodeMedicament(genererCodeMedicament());
 	}
 	
 	public String genererCodeMedicament() {
@@ -54,12 +52,10 @@ public class MedicamentController {
 	}
 	
 	public void enregistrer() {
-		medicament.setCodeMedicauent(genererCodeMedicament());
-		medicament.setStockActuel(stockActuel);
-		medicament.setStockAlerte(stockAlerte);
 		this.service.addObject(medicament);
 		annuler();
 		this.info("Enregistrement effectué avec succès!");
+		medicament.setCodeMedicament(genererCodeMedicament());
 		
 		
 	}
@@ -78,11 +74,11 @@ public class MedicamentController {
 	}
 	
 	public void annuler() {
-		medicament.setCodeMedicauent(genererCodeMedicament());
+		medicament.setCodeMedicament(null);
 		medicament.setCoutMedicament(null);
 		medicament.setNomMedicament(null);
-		setStockActuel(0);
-		setStockAlerte(0);
+		medicament.setStockActuel(0);
+		medicament.setStockAlerte(0);
 	}
 	
 	public void info(String monMessage) {
@@ -141,19 +137,4 @@ public class MedicamentController {
 		this.btnModifier = btnModifier;
 	}
 
-	public int getStockActuel() {
-		return stockActuel;
-	}
-
-	public void setStockActuel(int stockActuel) {
-		this.stockActuel = stockActuel;
-	}
-
-	public int getStockAlerte() {
-		return stockAlerte;
-	}
-
-	public void setStockAlerte(int stockAlerte) {
-		this.stockAlerte = stockAlerte;
-	}
 }
