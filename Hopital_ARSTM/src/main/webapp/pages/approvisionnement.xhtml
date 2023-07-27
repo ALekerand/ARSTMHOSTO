@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:p="http://primefaces.org/ui"> 
+       
+       
+     
+     <ui:composition template="/templates/template.xhtml">
+     
+     	<ui:define name="body">
+     	<h:form id="form">
+     		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+     				
+     					<fieldset>
+ 	<legend>Choix du medicament</legend>
+ 	<h:panelGrid columns="3" cellpadding="10">
+ 	<p:outputLabel for="cb_med" value="Medicament"/>
+		<p:selectOneMenu id="cb_med" required="true" value="#{approvisionnementController.idMedicament}">
+		<p:ajax listener="#{approvisionnementController.chargerMedicament}" event="change" update=":form" process="@this"/>
+		<f:selectItem itemLabel="Selectionnez" itemValue="" />
+		<f:selectItems value="#{approvisionnementController.listMedicament}" var="tata" itemLabel="#{tata.nomMedicament}" itemValue="#{tata.idMedicament}"></f:selectItems>
+		</p:selectOneMenu>
+
+ 	</h:panelGrid>
+ 			
+<h:panelGrid columns="6" cellpadding="10">
+	<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
+	<p:inputText id="input_code" value="#{approvisionnementController.medicament.codeMedicament}" readonly="true" style="width:60px"></p:inputText>	
+
+<p:outputLabel for="input_cout" value="Cout :"></p:outputLabel>
+<p:inputText id="input_cout" value="#{approvisionnementController.medicament.coutMedicament}" readonly="true" ></p:inputText>
+
+<p:outputLabel for="input_stock" value="Stock actuel:"></p:outputLabel>
+<p:inputText id="input_stock" value="#{approvisionnementController.medicament.stockActuel}" readonly="true" style="width:60px"></p:inputText>
+
+</h:panelGrid>
+</fieldset>
+
+<fieldset>
+ 	<legend>Enregistrement des approvisionnements</legend>
+	<h:panelGrid columns="6" cellpadding="10">
+	<p:outputLabel for="input_codeApp" value="Code: "></p:outputLabel>
+	<p:inputText id="input_codeApp" value="#{approvisionnementController.approvisionnement.codeApprovisionnement}" required="true" 
+	requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+	
+	<p:outputLabel for="input_qte" value="Quantité: "></p:outputLabel>
+	<p:inputText id="input_qte" value="#{approvisionnementController.approvisionnement.quantiteApprovisionnement}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+ 	</h:panelGrid>
+ 	</fieldset>
+ 	
+ 	<br/>
+	<p:toolbar >
+		<f:facet name="left">
+			<p:commandButton value="Enregistrer" action="#{approvisionnementController.enregistre}" update="form" binding="#{approvisionnementController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+			<p:commandButton value="Annuler"  action="#{approvisionnementController.annuler}" update="form" binding="#{approvisionnementController.btnAnnuler}"><p:confirm header="confirmation" message="voulez-vous annuler?"></p:confirm></p:commandButton>
+			<p:commandButton value="Modifier"  action="#{approvisionnementController.modifier}" update="form" binding="#{approvisionnementController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+		</f:facet>
+	</p:toolbar>
+	<br/>
+
+<p:dataTable  var="var" value="#{approvisionnementController.listApprovisionnement}" selectionMode="single" selection="#{approvisionnementController.selectedApprovisionnement}" rowKey="#{var.idApprovisionnement}" paginator="true" paginatorPosition="bottom" rows="5" rowsPerPageTemplate="5,10,15,{ShowAll|'All'}">
+ <f:facet name="header">LISTE DES APPROVISIONNEMENTS</f:facet>
+ 	
+ 	 <p:ajax event="rowSelect" process="@this"  update="form" listener="#{approvisionnementController.selectionnerLigne}"></p:ajax>
+   		<p:column headerText="Code" style="width:10%">
+        <h:outputText value="#{var.codeApprovisionnement}"/>
+        </p:column>
+        
+        <p:column headerText="Materiel">
+        <h:outputText value="#{var.medicament.nomMedicament}"/>
+        </p:column>
+        
+        <p:column headerText="Quantité">
+        <h:outputText value="#{var.quantiteApprovisionnement}"/>
+        </p:column>
+        
+        <p:column headerText="Date">
+        <h:outputText value="#{var.dateApprovisionnement}"/>
+        </p:column>
+        </p:dataTable>
+			
+		  <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	   </p:confirmDialog>
+				</h:form>
+          	</ui:define>
+     
+     </ui:composition>
+
+
+</html>

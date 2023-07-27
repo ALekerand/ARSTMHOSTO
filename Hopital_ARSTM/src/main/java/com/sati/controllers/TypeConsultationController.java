@@ -29,7 +29,7 @@ public class TypeConsultationController {
 	
 	private CommandButton btnEnregistrer = new CommandButton();
 	private CommandButton btnModifier = new CommandButton();
-	private CommandButton btnSupprimer = new CommandButton();
+	private CommandButton btnAnnuler = new CommandButton();
 	
 	@PostConstruct
 	public void initialiser() {
@@ -64,12 +64,6 @@ public class TypeConsultationController {
 		service.updateObject(typeConsultation);
 		annuler();
 		this.info("Modification effectuée avec succès!");
-	}
-	
-	public void supprimer() {
-		service.deleteObject(typeConsultation);
-		annuler();
-		this.info("Suppression effectuée avec succès!");
 	}
 	
 	public void annuler() {
@@ -113,10 +107,13 @@ public class TypeConsultationController {
 	public void setBtnModifier(CommandButton btnModifier) {
 		this.btnModifier = btnModifier;
 	}
-	public CommandButton getBtnSupprimer() {
-		return btnSupprimer;
+
+	public CommandButton getBtnAnnuler() {
+		return btnAnnuler;
 	}
-	public void setBtnSupprimer(CommandButton btnSupprimer) {
-		this.btnSupprimer = btnSupprimer;
+
+	public void setBtnAnnuler(CommandButton btnAnnuler) {
+		this.btnAnnuler = btnAnnuler;
 	}
+	
 }

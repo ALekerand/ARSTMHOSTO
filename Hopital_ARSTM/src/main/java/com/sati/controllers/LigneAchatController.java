@@ -1,7 +1,6 @@
 package com.sati.controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.sati.model.EtudiantArstm;
 import com.sati.model.FacturePharmacie;
 import com.sati.model.LigneAchat;
 import com.sati.model.Medicament;
@@ -27,114 +27,124 @@ public class LigneAchatController {
 	@Autowired
 	Iservice service;
 	private LigneAchat ligneAchat = new LigneAchat();
-	private List<LigneAchat> listLigneAchat = new ArrayList<LigneAchat>();
-	private LigneAchat selectedLigneAchat;
-	private Patient patient = new Patient();
+	private List<LigneAchat> listAchat = new ArrayList<LigneAchat>();
+	private FacturePharmacie facturePharmacie;
+	private List<FacturePharmacie> listObject = new ArrayList<FacturePharmacie>();
+	private int idMedicament;
+	private int quantiteMedicament;
+	private Medicament selectedMedicament;
+	private List<Medicament> listMedicament = new ArrayList<Medicament>();
+	private Medicament medicament = new Medicament();
+	private List<LigneAchat> listLigneAchat = new ArrayList<>();
+	private Patient patient;
 	private List<Patient> listPatient = new ArrayList<Patient>();
 	private int idPatient;
-	private Medicament medicament = new Medicament();
-	private List<Medicament> listMedicament = new ArrayList<Medicament>();
-	private int idMedicament;
-	private FacturePharmacie facturePharmacie = new FacturePharmacie();
-	private List<FacturePharmacie> listFacturePharmacie = new ArrayList<FacturePharmacie>();
-	private int idFacturePharmacie;
+	private String typePatient;
+	private EtudiantArstm etudiant = new EtudiantArstm();
 	
 	private CommandButton btnEnregistrer = new CommandButton();
-	private CommandButton btnModifier = new CommandButton();
-	private CommandButton btnSupprimer = new CommandButton();
-
-	@PostConstruct
-	public void initialiser() {
-		this.btnModifier.setDisabled(true);
-		ligneAchat.setCodeAchat(genererCodeLigneAchat());
+	private CommandButton btnAjouter = new CommandButton();
+	
+	
+	public void ajouter() {
+		System.out.println("=====Lancement de la methode=======");
+		LigneAchat ligneAchat = new LigneAchat();
+		ligneAchat.setQuantiteMedicament(quantiteMedicament);
+		ligneAchat.setMedicament(selectedMedicament);
+		listAchat.add(ligneAchat);
+		this.info("Ajout effectué avec succès!");
+		annulerLigneAchat();
 	}
 	
-	public String genererCodeLigneAchat() {
-		String prefix="";
-		int nbEnregistrement = this.service.getObjects("LigneAchat").size();
-		if(nbEnregistrement < 10)
-			prefix = "LA00" ;
-		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
-			prefix = "LA0" ;
-		if (nbEnregistrement > 100) 
-			prefix = "LA" ;
-		return new String(prefix+(nbEnregistrement+1));
-	}
-	
-	public void enregistrer() {
-		patient = (Patient) service.getObjectById(idPatient, "Patient");
-		medicament = (Medicament) service.getObjectById(idMedicament, "Medicament");
-		facturePharmacie = (FacturePharmacie) service.getObjectById(idFacturePharmacie, "FacturePharmacie");
-		ligneAchat.setPatient(patient);
-		ligneAchat.setMedicament(medicament);
-		ligneAchat.setFacturePharmacie(facturePharmacie);
-		ligneAchat.setDateAchat(new Date());
-		this.service.addObject(ligneAchat);
-		annuler();
-		this.info("Enregistrement effectué avec succès!");
-		ligneAchat.setCodeAchat(genererCodeLigneAchat());
-	}
-	
-	
-	public void annuler() {
-		ligneAchat.setCodeAchat(null);
-		ligneAchat.setQuantiteMedicament(0);
-		setIdPatient(0);
-		setIdFacturePharmacie(0);
-		setIdMedicament(0);
+	public void annulerLigneAchat() {
+		setQuantiteMedicament(0);
+		medicament.setCodeMedicament(null);
+		medicament.setCoutMedicament(null);
+		medicament.setNomMedicament(null);
+		
 	}
 	
 	public void info(String monMessage) {
-		FacesContext.getCurrentInstance().addMessage((String) null, 
-				new FacesMessage(FacesMessage.SEVERITY_INFO, monMessage,null ));
+		FacesContext.getCurrentInstance().addMessage((String) null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, monMessage, null));
 	}
 	
-	public void selectionnerLigne() {
-		ligneAchat = selectedLigneAchat;
-		this.btnEnregistrer.setDisabled(true);
-		this.btnModifier.setDisabled(false);
+	public void chargerPatient() {
+		patient = new Patient();
+		patient = (Patient) service.getObjectById(idPatient, "Patient");
+		if ((etudiant = (EtudiantArstm) service.getObjectById(patient.getIdPatient(), "EtudiantArstm"))== null) {
+			setTypePatient("ETUDIANT ARSTM");
+		}else {
+			setTypePatient("PERSONNEL ARSTM");
+		}
+	}
+	public void choisirLigne() {
+		this.medicament = this.selectedMedicament;
 	}
 	public LigneAchat getLigneAchat() {
 		return ligneAchat;
 	}
-
 	public void setLigneAchat(LigneAchat ligneAchat) {
 		this.ligneAchat = ligneAchat;
 	}
-
+	
+	
+	public List<LigneAchat> getListAchat() {
+		return listAchat;
+	}
+	public void setListAchat(List<LigneAchat> listAchat) {
+		this.listAchat = listAchat;
+	}
+	public FacturePharmacie getFacturePharmacie() {
+		return facturePharmacie;
+	}
+	public void setFacturePharmacie(FacturePharmacie facturePharmacie) {
+		this.facturePharmacie = facturePharmacie;
+	}
+	public CommandButton getBtnEnregistrer() {
+		return btnEnregistrer;
+	}
+	public void setBtnEnregistrer(CommandButton btnEnregistrer) {
+		this.btnEnregistrer = btnEnregistrer;
+	}
+	public CommandButton getBtnAjouter() {
+		return btnAjouter;
+	}
+	public void setBtnAjouter(CommandButton btnAjouter) {
+		this.btnAjouter = btnAjouter;
+	}
+	public List<FacturePharmacie> getListObject() {
+		return listObject;
+	}
+	public void setListObject(List<FacturePharmacie> listObject) {
+		this.listObject = listObject;
+	}
+	public int getIdMedicament() {
+		return idMedicament;
+	}
+	public void setIdMedicament(int idMedicament) {
+		this.idMedicament = idMedicament;
+	}
+	public int getQuantiteMedicament() {
+		return quantiteMedicament;
+	}
+	public void setQuantiteMedicament(int quantiteMedicament) {
+		this.quantiteMedicament = quantiteMedicament;
+	}
+	public Medicament getSelectedMedicament() {
+		return selectedMedicament;
+	}
+	public void setSelectedMedicament(Medicament selectedMedicament) {
+		this.selectedMedicament = selectedMedicament;
+	}
+	
 	@SuppressWarnings("unchecked")
-	public List<LigneAchat> getListLigneAchat() {
-		listLigneAchat = service.getObjects("LigneAchat");
-		System.out.println("==========Taille de la liste est:"+listLigneAchat.size());
-		return listLigneAchat;
+	public List<Medicament> getListMedicament() {
+		listMedicament = service.getObjects("Medicament");
+		return listMedicament;
 	}
-
-	public void setListLigneAchat(List<LigneAchat> listLigneAchat) {
-		this.listLigneAchat = listLigneAchat;
-	}
-
-	public LigneAchat getSelectedLigneAchat() {
-		return selectedLigneAchat;
-	}
-
-	public void setSelectedLigneAchat(LigneAchat selectedLigneAchat) {
-		this.selectedLigneAchat = selectedLigneAchat;
-	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-
-	public int getIdPatient() {
-		return idPatient;
-	}
-
-	public void setIdPatient(int idPatient) {
-		this.idPatient = idPatient;
+	public void setListMedicament(List<Medicament> listMedicament) {
+		this.listMedicament = listMedicament;
 	}
 
 	public Medicament getMedicament() {
@@ -145,18 +155,33 @@ public class LigneAchatController {
 		this.medicament = medicament;
 	}
 
-	public FacturePharmacie getFacturePharmacie() {
-		return facturePharmacie;
+	public EtudiantArstm getEtudiant() {
+		return etudiant;
 	}
 
-	public void setFacturePharmacie(FacturePharmacie facturePharmacie) {
-		this.facturePharmacie = facturePharmacie;
+	public void setEtudiant(EtudiantArstm etudiant) {
+		this.etudiant = etudiant;
+	}
+
+	public List<LigneAchat> getListLigneAchat() {
+		return listLigneAchat;
+	}
+
+	public void setListLigneAchat(List<LigneAchat> listLigneAchat) {
+		this.listLigneAchat = listLigneAchat;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Patient> getListPatient() {
 		listPatient = service.getObjects("Patient");
-		System.out.println("==========Taille de la liste est:"+listPatient.size());
 		return listPatient;
 	}
 
@@ -164,59 +189,20 @@ public class LigneAchatController {
 		this.listPatient = listPatient;
 	}
 
-	public int getIdMedicament() {
-		return idMedicament;
+	public int getIdPatient() {
+		return idPatient;
 	}
 
-	public void setIdMedicament(int idMedicament) {
-		this.idMedicament = idMedicament;
+	public void setIdPatient(int idPatient) {
+		this.idPatient = idPatient;
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Medicament> getListMedicament() {
-		listMedicament = service.getObjects("Medicament");
-		System.out.println("==========Taille de la liste est:"+listMedicament);
-		return listMedicament;
+	public String getTypePatient() {
+		return typePatient;
 	}
 
-	public void setListMedicament(List<Medicament> listMedicament) {
-		this.listMedicament = listMedicament;
+	public void setTypePatient(String typePatient) {
+		this.typePatient = typePatient;
 	}
-
-	@SuppressWarnings("unchecked")
-	public List<FacturePharmacie> getListFacturePharmacie() {
-		listFacturePharmacie = service.getObjects("FacturePharmacie");
-		System.out.println("========Taille de la liste est:"+listFacturePharmacie.size());
-		return listFacturePharmacie;
-	}
-
-	public void setListFacturePharmacie(List<FacturePharmacie> listFacturePharmacie) {
-		this.listFacturePharmacie = listFacturePharmacie;
-	}
-
-	public int getIdFacturePharmacie() {
-		return idFacturePharmacie;
-	}
-
-	public void setIdFacturePharmacie(int idFacturePharmacie) {
-		this.idFacturePharmacie = idFacturePharmacie;
-	}
-	public CommandButton getBtnEnregistrer() {
-		return btnEnregistrer;
-	}
-	public void setBtnEnregistrer(CommandButton btnEnregistrer) {
-		this.btnEnregistrer = btnEnregistrer;
-	}
-	public CommandButton getBtnModifier() {
-		return btnModifier;
-	}
-	public void setBtnModifier(CommandButton btnModifier) {
-		this.btnModifier = btnModifier;
-	}
-	public CommandButton getBtnSupprimer() {
-		return btnSupprimer;
-	}
-	public void setBtnSupprimer(CommandButton btnSupprimer) {
-		this.btnSupprimer = btnSupprimer;
-	}
+	
 }

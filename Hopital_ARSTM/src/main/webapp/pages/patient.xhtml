@@ -54,6 +54,7 @@
 			<f:facet name="left">
 				<p:commandButton value="Enregistrer" action="#{patientController.enregistrer}" update="form" binding="#{patientController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
 				<p:commandButton value="Modifier"  action="#{patientController.modifier}" update="form" binding="#{patientController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler"   action="#{patientController.annuler}"  update="form" binding="#{patientController.btnAnnuler}"><p:confirm header="confirmation" message="confirmez-vous l'annulation?"></p:confirm></p:commandButton>
 			</f:facet>
 		</p:toolbar>
 		<br/>

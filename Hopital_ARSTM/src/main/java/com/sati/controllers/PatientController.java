@@ -49,7 +49,7 @@ public class PatientController {
 	
 	private CommandButton btnEnregistrer = new CommandButton();
 	private CommandButton btnModifier = new CommandButton();
-	private CommandButton btnSupprimer = new CommandButton();
+	private CommandButton btnAnnuler = new CommandButton();
 	
 	@PostConstruct
 	public void initialiser() {
@@ -78,19 +78,19 @@ public class PatientController {
 		etudiant.setPatient(patient);
 		etudiant.setFiliere(filiere);
 		etudiant.setIdGenre(idGenre);
-		etudiant.setCodePatient(codePatient);
-		etudiant.setNomPatient(nomPatient);
-		etudiant.setPrenomPatient(prenomPatient);
-		etudiant.setTelephonePatient(telephonePatient);
+		etudiant.setCodePatient(getCodePatient());
+		etudiant.setNomPatient(getNomPatient());
+		etudiant.setPrenomPatient(getPrenomPatient());
+		etudiant.setTelephonePatient(getTelephonePatient());
 		this.service.addObject(etudiant);
 		services = (Service) service.getObjectById(idService, "Service");
 		personnel.setPatient(patient);
 		personnel.setService(services);
 		personnel.setIdGenre(idGenre);
-		personnel.setCodePatient(codePatient);
-		personnel.setNomPatient(nomPatient);
-		personnel.setPrenomPatient(prenomPatient);
-		personnel.setTelephonePatient(telephonePatient);
+		personnel.setCodePatient(getCodePatient());
+		personnel.setNomPatient(getNomPatient());
+		personnel.setPrenomPatient(getPrenomPatient());
+		personnel.setTelephonePatient(getTelephonePatient());
 		this.service.addObject(personnel);
 		annuler();
 		info("Enregistrement effectué avec succès!");
@@ -143,12 +143,6 @@ public class PatientController {
 	}
 	public void setBtnEnregistrer(CommandButton btnEnregistrer) {
 		this.btnEnregistrer = btnEnregistrer;
-	}
-	public CommandButton getBtnSupprimer() {
-		return btnSupprimer;
-	}
-	public void setBtnSupprimer(CommandButton btnSupprimer) {
-		this.btnSupprimer = btnSupprimer;
 	}
 	
 	public CommandButton getBtnModifier() {
@@ -282,6 +276,14 @@ public class PatientController {
 
 	public void setListService(List<Service> listService) {
 		this.listService = listService;
+	}
+
+	public CommandButton getBtnAnnuler() {
+		return btnAnnuler;
+	}
+
+	public void setBtnAnnuler(CommandButton btnAnnuler) {
+		this.btnAnnuler = btnAnnuler;
 	}
 
 }

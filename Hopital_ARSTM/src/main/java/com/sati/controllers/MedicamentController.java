@@ -29,7 +29,7 @@ public class MedicamentController {
 	
 	private CommandButton btnEnregistrer = new CommandButton();
 	private CommandButton btnModifier = new CommandButton();
-	private CommandButton btnSupprimer = new CommandButton();
+	private CommandButton btnAnnuler = new CommandButton();
 	
 	
 	@PostConstruct
@@ -64,12 +64,6 @@ public class MedicamentController {
 		this.service.updateObject(medicament);
 		annuler();
 		this.info("Modification effectuée avec succès!");
-		
-	}
-	public void supprimer() {
-		this.service.deleteObject(medicament);
-		annuler();
-		this.info("Suppression effectuée avec succès!");
 		
 	}
 	
@@ -121,20 +115,20 @@ public class MedicamentController {
 		this.btnEnregistrer = btnEnregistrer;
 	}
 
-	public CommandButton getBtnSupprimer() {
-		return btnSupprimer;
-	}
-
-	public void setBtnSupprimer(CommandButton btnSupprimer) {
-		this.btnSupprimer = btnSupprimer;
-	}
-
 	public CommandButton getBtnModifier() {
 		return btnModifier;
 	}
 
 	public void setBtnModifier(CommandButton btnModifier) {
 		this.btnModifier = btnModifier;
+	}
+
+	public CommandButton getBtnAnnuler() {
+		return btnAnnuler;
+	}
+
+	public void setBtnAnnuler(CommandButton btnAnnuler) {
+		this.btnAnnuler = btnAnnuler;
 	}
 
 }

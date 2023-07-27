@@ -69,7 +69,6 @@ public class CabinetController {
 		cabinet.setEmailCabinet(null);
 		cabinet.setNomCabinet(null);
 		cabinet.setTelephoneCabinet(null);
-		this.info("Annulation effectuée avec succès!");
 	}
 	public void info(String monMessage) {
 		FacesContext.getCurrentInstance().addMessage((String) null, 

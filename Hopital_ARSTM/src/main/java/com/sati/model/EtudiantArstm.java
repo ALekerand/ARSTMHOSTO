@@ -62,7 +62,7 @@ public class EtudiantArstm implements java.io.Serializable {
 		this.idPatient = idPatient;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_FILIERE", nullable = false)
 	public Filiere getFiliere() {
 		return this.filiere;
@@ -72,7 +72,7 @@ public class EtudiantArstm implements java.io.Serializable {
 		this.filiere = filiere;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	public Patient getPatient() {
 		return this.patient;

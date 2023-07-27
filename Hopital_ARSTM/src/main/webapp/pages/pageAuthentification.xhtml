@@ -52,7 +52,7 @@
 <p:toolbar >
 			<f:facet name="left">
 				<p:commandButton value="Enregistrer" action="#{userAuthenticationController.enregistrer}" update="form" binding="#{userAuthenticationController.btnEnregistrer}"><p:confirm header="confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Supprimer"  action="#{userAuthenticationController.supprimer}" process="@this" update="form" binding="#{userAuthenticationController.btnSupprimer}"><p:confirm header="confirmation" message="voulez-vous annuler?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler"  action="#{userAuthenticationController.annuler}" process="@this" update="form" binding="#{userAuthenticationController.btnAnnuler}"><p:confirm header="confirmation" message="voulez-vous annuler?"></p:confirm></p:commandButton>
 				<p:commandButton value="Modifier"  action="#{userAuthenticationController.modifier}" update="form" binding="#{userAuthenticationController.btnModifier}"><p:confirm header="confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 			</f:facet>
 		</p:toolbar>

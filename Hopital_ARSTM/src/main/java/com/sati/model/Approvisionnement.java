@@ -54,7 +54,7 @@ public class Approvisionnement implements java.io.Serializable {
 		this.idApprovisionnement = idApprovisionnement;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_MEDICAMENT", nullable = false)
 	public Medicament getMedicament() {
 		return this.medicament;

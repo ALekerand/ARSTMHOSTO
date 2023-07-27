@@ -28,7 +28,7 @@ public class ServiceController {
 	
 	private CommandButton btnEnregistrer = new CommandButton();
 	private CommandButton btnModifier = new CommandButton();
-	private CommandButton btnSupprimer = new CommandButton();
+	private CommandButton btnAnnuler = new CommandButton();
 	
 	
 	@PostConstruct
@@ -62,12 +62,6 @@ public class ServiceController {
 		this.service.updateObject(services);
 		annuler();
 		info("Modification effectuée avrc succès!");
-	}
-	
-	public void supprimer() {
-		this.service.deleteObject(services);
-		annuler();
-		this.info("Suppression effectuée avec succès!");
 	}
 	
 	public void annuler() {
@@ -120,11 +114,13 @@ public class ServiceController {
 	public void setBtnModifier(CommandButton btnModifier) {
 		this.btnModifier = btnModifier;
 	}
-	public CommandButton getBtnSupprimer() {
-		return btnSupprimer;
+
+	public CommandButton getBtnAnnuler() {
+		return btnAnnuler;
 	}
-	public void setBtnSupprimer(CommandButton btnSupprimer) {
-		this.btnSupprimer = btnSupprimer;
+
+	public void setBtnAnnuler(CommandButton btnAnnuler) {
+		this.btnAnnuler = btnAnnuler;
 	}
 
 }

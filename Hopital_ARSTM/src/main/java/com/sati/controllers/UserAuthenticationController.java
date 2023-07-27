@@ -30,7 +30,7 @@ public class UserAuthenticationController {
 	
 	private CommandButton btnEnregistrer = new CommandButton();
 	private CommandButton btnModifier = new CommandButton();
-	private CommandButton btnSupprimer = new CommandButton();
+	private CommandButton btnAnnuler = new CommandButton();
 	
 	
 	@PostConstruct
@@ -69,11 +69,6 @@ public class UserAuthenticationController {
 		this.info("Modification effectuée avec succès!");
 	}
 	
-	public void supprimer() {
-		service.deleteObject(userAuthentication);
-		annuler();
-		this.info("Suppression effectuée avec succès!");
-	}
 	public void selectionnerLigne() {
 		this.userAuthentication = this.selectedUserAuthentication;
 		this.btnEnregistrer.setDisabled(true);
@@ -124,22 +119,20 @@ public class UserAuthenticationController {
 		this.btnModifier = btnModifier;
 	}
 
-
-	public CommandButton getBtnSupprimer() {
-		return btnSupprimer;
-	}
-
-
-	public void setBtnSupprimer(CommandButton btnSupprimer) {
-		this.btnSupprimer = btnSupprimer;
-	}
-
 	public String getRole() {
 		return role;
 	}
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public CommandButton getBtnAnnuler() {
+		return btnAnnuler;
+	}
+
+	public void setBtnAnnuler(CommandButton btnAnnuler) {
+		this.btnAnnuler = btnAnnuler;
 	}
 
 }

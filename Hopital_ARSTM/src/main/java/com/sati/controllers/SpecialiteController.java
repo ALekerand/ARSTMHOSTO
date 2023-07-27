@@ -65,7 +65,6 @@ public class SpecialiteController {
 	public void annuler() {
 		specialite.setCodeSpecialite(null);
 		specialite.setLibelleSpecialite(null);
-		this.info("Annulation effectuée avec succès!");
 	}
 	
 	public void info(String monMessage) {

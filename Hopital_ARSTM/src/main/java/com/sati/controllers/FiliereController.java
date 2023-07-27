@@ -27,7 +27,7 @@ public class FiliereController {
 	
 	private CommandButton btnEnregistrer = new CommandButton();
 	private CommandButton btnModifier = new CommandButton();
-	private CommandButton btnSupprimer = new CommandButton();
+	private CommandButton btnAnnuler = new CommandButton();
 	
 	@PostConstruct
 	public void initialiser() {
@@ -69,17 +69,10 @@ public class FiliereController {
 		FacesContext.getCurrentInstance().addMessage((String) null, 
 				new FacesMessage(FacesMessage.SEVERITY_INFO, monMessage,null ));
 	}
-
-	public void supprimer() {
-		this.service.deleteObject(this.filiere);
-		this.info("Suppression effectuée avec succès!");
-		annuler();
-	}
 	
 	public void annuler() {
 		filiere.setCodeFiliere(null);
 		filiere.setLibelleFiliere(null);
-		this.info("Annulation effectuée avec succès!");
 	}
 	public Filiere getFiliere() {
 		return filiere;
@@ -119,12 +112,11 @@ public class FiliereController {
 	public void setBtnModifier(CommandButton btnModifier) {
 		this.btnModifier = btnModifier;
 	}
-
-	public CommandButton getBtnSupprimer() {
-		return btnSupprimer;
+	public CommandButton getBtnAnnuler() {
+		return btnAnnuler;
+	}
+	public void setBtnAnnuler(CommandButton btnAnnuler) {
+		this.btnAnnuler = btnAnnuler;
 	}
 
-	public void setBtnSupprimer(CommandButton btnSupprimer) {
-		this.btnSupprimer = btnSupprimer;
-	}
 }
