@@ -62,7 +62,7 @@ public class GenreController {
 	}
 
 	public void annuler() {
-		genre.setCodeGenre(genererCodeGenre());
+		genre.setCodeGenre(null);
 		genre.setLibelleGenre(null);
 	}
 	

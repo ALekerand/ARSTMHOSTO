@@ -9,12 +9,20 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.component.selectonebutton.SelectOneButton;
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.sati.model.Consultation;
+import com.sati.model.EtudiantArstm;
+import com.sati.model.Filiere;
+import com.sati.model.Genre;
+import com.sati.model.Medecin;
 import com.sati.model.Patient;
+import com.sati.model.PersonnelArstm;
+import com.sati.model.Service;
 import com.sati.model.TypeConsultation;
 import com.sati.model.UserAuthentication;
 import com.sati.requêtes.RequeteUtilisateur;
@@ -34,20 +42,42 @@ public class ConsultationController {
 	private Consultation selectedConsultation;
 	private UserAuthentication userAuthentication = new UserAuthentication();
 	private Patient patient = new Patient();
-	private int idPatient;
 	private List<Patient> listPatient = new ArrayList<Patient>();
 	private TypeConsultation typeConsultation = new TypeConsultation();
 	private int idTypeConsultation;
 	private List<TypeConsultation> listTypeConsultation = new ArrayList<TypeConsultation>();
+	private Genre genre = new Genre();
+	private List<Genre> listGenre = new ArrayList<Genre>();
+	private int idGenre;
+	private Filiere filiere = new Filiere();
+	private List<Filiere> listFiliere = new ArrayList<Filiere>();
+	private int idFiliere;
+	private Service services = new Service();
+	private List<Service> listService = new ArrayList<Service>();
+	private int idService;
+	private EtudiantArstm etudiant = new EtudiantArstm();
+	private PersonnelArstm personnel = new PersonnelArstm();
+	private String codePatient;
+	private String nomPatient;
+	private String prenomPatient;
+	private String telephonePatient;
+	private String nature;
+	private Medecin medecin = new Medecin();
+	private List<Medecin> listMedecin = new ArrayList<Medecin>();
+	private int idMedecin;
 	
 	private CommandButton btnEnregistrer = new CommandButton();
 	private CommandButton btnModifier = new CommandButton();
 	private CommandButton btnSupprimer = new CommandButton();
-	
+	private SelectOneMenu cbService = new SelectOneMenu();
+	private SelectOneMenu cbFiliere = new SelectOneMenu();
 	
 	@PostConstruct
 	public void initialiser() {
 		this.btnModifier.setDisabled(true);
+		this.cbFiliere.setDisabled(true);
+		this.cbService.setDisabled(true);
+		patient.setCodePatient(genererCodePatient());
 		this.consultation.setCodeConsultation(genererCodeConsultation());
 		chagerUtilisateur();
 	}
@@ -56,6 +86,18 @@ public class ConsultationController {
 		String prefix="";
 		int nbEnregistrement = this.service.getObjects("Consultation").size();
 		if(nbEnregistrement < 10)
+			prefix = "CON00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "CON0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "CON" ;
+		return new String(prefix+(nbEnregistrement+1));
+	}
+	
+	public String genererCodePatient() {
+		String prefix="";
+		int nbEnregistrement = this.service.getObjects("Patient").size();
+		if(nbEnregistrement < 10)
 			prefix = "PA00" ;
 		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
 			prefix = "PA0" ;
@@ -63,16 +105,63 @@ public class ConsultationController {
 			prefix = "PA" ;
 		return new String(prefix+(nbEnregistrement+1));
 	}
-	
 	public UserAuthentication chagerUtilisateur() {
 		return userAuthentication = requeteUtilisateur.recuperUser();
 	}
 	
+	public void chargerPatient() {
+		switch (nature){
+		case "ETUDIANT":{
+			this.cbFiliere.setDisabled(false);
+			break;
+		}
+		case "PERSONNEL":{
+			this.cbService.setDisabled(false);
+			break;
+		}
+		}
+	
+		
+	}
+	
 	public void enregistrer() {
+		genre = (Genre) service.getObjectById(idGenre, "Genre");
+		patient.setGenre(genre);;
+		this.service.addObject(patient);
+		switch (nature) {
+		case "ETUDIANT":{
+			this.cbFiliere.setDisabled(false);
+			filiere = (Filiere) service.getObjectById(idFiliere, "Filiere");
+			etudiant.setPatient(patient);
+			etudiant.setFiliere(filiere);
+			etudiant.setIdGenre(idGenre);
+			etudiant.setCodePatient(patient.getCodePatient());
+			etudiant.setNomPatient(patient.getNomPatient());
+			etudiant.setPrenomPatient(patient.getTelephonePatient());
+			etudiant.setTelephonePatient(patient.getTelephonePatient());
+			this.service.addObject(etudiant);
+			break;
+		}
+			case "PERSONNEL":{
+				this.cbService.setDisabled(false);
+				services = (Service) service.getObjectById(idService, "Service");
+				personnel.setPatient(patient);
+				personnel.setService(services);
+				personnel.setIdGenre(idGenre);
+				personnel.setCodePatient(patient.getCodePatient());
+				personnel.setNomPatient(patient.getNomPatient());
+				personnel.setPrenomPatient(patient.getPrenomPatient());
+				personnel.setTelephonePatient(patient.getTelephonePatient());
+				this.service.addObject(personnel);
+				break;
+			}
+			
+		}
+		medecin = (Medecin) service.getObjectById(idMedecin, "Medecin");
 		typeConsultation = (TypeConsultation) service.getObjectById(idTypeConsultation, "TypeConsultation");
-		patient = (Patient) service.getObjectById(idPatient, "Patient");
 		consultation.setTypeConsultation(typeConsultation);
 		consultation.setPatient(patient);
+		consultation.setMedecin(medecin);
 		consultation.setUserAuthentication(userAuthentication);
 		consultation.setDateConsultation(new Date());
 		this.service.addObject(consultation);
@@ -82,9 +171,15 @@ public class ConsultationController {
 	}
 	
 	public void annuler() {
+		patient.setCodePatient(null);
+		patient.setNomPatient(null);
+		patient.setPrenomPatient(null);
+		patient.setTelephonePatient(null);
+		setIdFiliere(0);
+		setIdGenre(idGenre);
+		setIdService(idService);
 		consultation.setCodeConsultation(null);
 		consultation.setObservation(null);
-		setIdPatient(0);
 		setIdTypeConsultation(0);
 	}
 	public void info(String monMessage) {
@@ -150,14 +245,6 @@ public class ConsultationController {
 		this.patient = patient;
 	}
 
-	public int getIdPatient() {
-		return idPatient;
-	}
-
-	public void setIdPatient(int idPatient) {
-		this.idPatient = idPatient;
-	}
-
 	@SuppressWarnings("unchecked")
 	public List<Patient> getListPatient() {
 		listPatient = service.getObjects("Patient");
@@ -194,6 +281,186 @@ public class ConsultationController {
 
 	public void setListTypeConsultation(List<TypeConsultation> listTypeConsultation) {
 		this.listTypeConsultation = listTypeConsultation;
+	}
+
+	public Genre getGenre() {
+		return genre;
+	}
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
+
+	public Filiere getFiliere() {
+		return filiere;
+	}
+
+	public void setFiliere(Filiere filiere) {
+		this.filiere = filiere;
+	}
+
+	public Service getServices() {
+		return services;
+	}
+
+	public void setServices(Service services) {
+		this.services = services;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Genre> getListGenre() {
+		listGenre = service.getObjects("Genre");
+		System.out.println("=======Taille de la liste:"+listGenre.size());
+		return listGenre;
+	}
+
+	public void setListGenre(List<Genre> listGenre) {
+		this.listGenre = listGenre;
+	}
+
+	public int getIdGenre() {
+		return idGenre;
+	}
+
+	public void setIdGenre(int idGenre) {
+		this.idGenre = idGenre;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Filiere> getListFiliere() {
+		listFiliere = service.getObjects("Filiere");
+		System.out.println("============Taille de la liste:"+listFiliere.size());
+		return listFiliere;
+	}
+
+	public void setListFiliere(List<Filiere> listFiliere) {
+		this.listFiliere = listFiliere;
+	}
+
+	public int getIdFiliere() {
+		return idFiliere;
+	}
+
+	public void setIdFiliere(int idFiliere) {
+		this.idFiliere = idFiliere;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Service> getListService() {
+		listService = service.getObjects("Service");
+		System.out.println("=========Taille de la liste:"+listService.size());
+		return listService;
+	}
+
+	public void setListService(List<Service> listService) {
+		this.listService = listService;
+	}
+
+	public int getIdService() {
+		return idService;
+	}
+
+	public void setIdService(int idService) {
+		this.idService = idService;
+	}
+
+	public EtudiantArstm getEtudiant() {
+		return etudiant;
+	}
+
+	public void setEtudiant(EtudiantArstm etudiant) {
+		this.etudiant = etudiant;
+	}
+
+	public PersonnelArstm getPersonnel() {
+		return personnel;
+	}
+
+	public void setPersonnel(PersonnelArstm personnel) {
+		this.personnel = personnel;
+	}
+
+	public String getCodePatient() {
+		return codePatient;
+	}
+
+	public void setCodePatient(String codePatient) {
+		this.codePatient = codePatient;
+	}
+
+	public String getNomPatient() {
+		return nomPatient;
+	}
+
+	public void setNomPatient(String nomPatient) {
+		this.nomPatient = nomPatient;
+	}
+
+	public String getPrenomPatient() {
+		return prenomPatient;
+	}
+
+	public void setPrenomPatient(String prenomPatient) {
+		this.prenomPatient = prenomPatient;
+	}
+
+	public String getTelephonePatient() {
+		return telephonePatient;
+	}
+
+	public void setTelephonePatient(String telephonePatient) {
+		this.telephonePatient = telephonePatient;
+	}
+
+	public String getNature() {
+		return nature;
+	}
+
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
+
+	public Medecin getMedecin() {
+		return medecin;
+	}
+
+	public void setMedecin(Medecin medecin) {
+		this.medecin = medecin;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Medecin> getListMedecin() {
+		listMedecin = service.getObjects("Medecin");
+		System.out.println("==========Taille de la liste:"+listMedecin.size());
+		return listMedecin;
+	}
+
+	public void setListMedecin(List<Medecin> listMedecin) {
+		this.listMedecin = listMedecin;
+	}
+
+	public int getIdMedecin() {
+		return idMedecin;
+	}
+
+	public void setIdMedecin(int idMedecin) {
+		this.idMedecin = idMedecin;
+	}
+
+	public SelectOneMenu getCbService() {
+		return cbService;
+	}
+
+	public void setCbService(SelectOneMenu cbService) {
+		this.cbService = cbService;
+	}
+
+	public SelectOneMenu getCbFiliere() {
+		return cbFiliere;
+	}
+
+	public void setCbFiliere(SelectOneMenu cbFiliere) {
+		this.cbFiliere = cbFiliere;
 	}
 	
 

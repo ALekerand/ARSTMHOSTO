@@ -49,7 +49,7 @@ public class TypeConsultationController {
 		return new String(prefix+(nbEnregistrement+1));
 	}
 	public void enregistrer() {
-		service.addObject(typeConsultation);
+		this.service.addObject(typeConsultation);
 		annuler();
 		this.info("Enregistrement effectué avec succès!");
 		typeConsultation.setCodeTypeConsultation(genererCodeTypeConsultation());
@@ -61,17 +61,18 @@ public class TypeConsultationController {
 		this.btnModifier.setDisabled(false);
 	}
 	public void modifier() {
-		service.updateObject(typeConsultation);
+		this.service.updateObject(typeConsultation);
 		annuler();
 		this.info("Modification effectuée avec succès!");
 	}
 	
 	public void annuler() {
 		typeConsultation.setCodeTypeConsultation(null);
-		typeConsultation.setCodeTypeConsultation(null);
+		typeConsultation.setMontantTypeConsult(null);
 	}
 	public void info(String monMessage) {
-		FacesContext.getCurrentInstance().addMessage((String) null, new FacesMessage(FacesMessage.SEVERITY_INFO, monMessage,null ));
+		FacesContext.getCurrentInstance().addMessage((String) null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, monMessage,null ));
 	}
 	public TypeConsultation getTypeConsultation() {
 		return typeConsultation;

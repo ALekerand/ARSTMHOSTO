@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.sati.model.EtudiantArstm;
 import com.sati.model.FacturePharmacie;
+import com.sati.model.Filiere;
 import com.sati.model.LigneAchat;
 import com.sati.model.Medicament;
 import com.sati.model.Patient;
@@ -41,6 +42,8 @@ public class LigneAchatController {
 	private int idPatient;
 	private String typePatient;
 	private EtudiantArstm etudiant = new EtudiantArstm();
+	private Filiere  filiere = new Filiere();
+	private String libelleFiliere;
 	
 	private CommandButton btnEnregistrer = new CommandButton();
 	private CommandButton btnAjouter = new CommandButton();
@@ -61,6 +64,7 @@ public class LigneAchatController {
 		medicament.setCodeMedicament(null);
 		medicament.setCoutMedicament(null);
 		medicament.setNomMedicament(null);
+		setSelectedMedicament(null);
 		
 	}
 	
@@ -72,11 +76,6 @@ public class LigneAchatController {
 	public void chargerPatient() {
 		patient = new Patient();
 		patient = (Patient) service.getObjectById(idPatient, "Patient");
-		if ((etudiant = (EtudiantArstm) service.getObjectById(patient.getIdPatient(), "EtudiantArstm"))== null) {
-			setTypePatient("ETUDIANT ARSTM");
-		}else {
-			setTypePatient("PERSONNEL ARSTM");
-		}
 	}
 	public void choisirLigne() {
 		this.medicament = this.selectedMedicament;
@@ -203,6 +202,22 @@ public class LigneAchatController {
 
 	public void setTypePatient(String typePatient) {
 		this.typePatient = typePatient;
+	}
+
+	public Filiere getFiliere() {
+		return filiere;
+	}
+
+	public void setFiliere(Filiere filiere) {
+		this.filiere = filiere;
+	}
+
+	public String getLibelleFiliere() {
+		return libelleFiliere;
+	}
+
+	public void setLibelleFiliere(String libelleFiliere) {
+		this.libelleFiliere = libelleFiliere;
 	}
 	
 }

@@ -9,20 +9,65 @@
 	<ui:define name="body">
 		<h:form id="form">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		<fieldset>
+ 	<legend>Enregistrement des patients</legend>		
+		<h:panelGrid columns="6" cellpadding="10">
 		
-				<fieldset>
- 	<legend>ENREGISTREMENT DES PATIENTS</legend>		
+		<p:outputLabel for="input_codeP" value="Code patient"></p:outputLabel>
+	<p:inputText id="input_codeP" value="#{consultationController.patient.codePatient}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+		
+	<p:outputLabel value="Nature"></p:outputLabel>
+	 <p:selectOneMenu id="nat" value="#{consultationController.nature}">
+	 		<p:ajax listener="#{consultationController.chargerPatient}" event="change" update="cb_filiere, cb_service" process="@this"> </p:ajax>
+	 			   <f:selectItem itemLabel="Selectionner" itemValue=""/>
+                    <f:selectItem itemLabel="ETUDIANT" itemValue="ETUDIANT" />
+                    <f:selectItem itemLabel="PERSONNEL" itemValue="PERSONNEL"/>
+                    <f:selectItem itemLabel="EXTERNE" itemValue="EXTERNE"/>
+     </p:selectOneMenu>
+	
+	<p:outputLabel for="input_nom" value="Nom patient"></p:outputLabel>
+	<p:inputText id="input_nom" value="#{consultationController.patient.nomPatient}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+	
+	<p:outputLabel for="input_pren" value="Prenom patient"></p:outputLabel>
+	<p:inputText id="input_pren" value="#{consultationController.patient.prenomPatient}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	
+	<p:outputLabel for="input_tel" value="Telephone patient"></p:outputLabel>
+	<p:inputText id="input_tel" value="#{consultationController.patient.telephonePatient}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	
+	<p:outputLabel  value="Genre"></p:outputLabel>
+	<p:selectOneMenu value="#{consultationController.idGenre}">
+		<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+		<f:selectItems value="#{consultationController.listGenre}" var="tata" itemValue="#{tata.idGenre}" itemLabel="#{tata.libelleGenre}"/>
+	</p:selectOneMenu>
+	
+	<p:outputLabel  value="Filière"></p:outputLabel>
+	<p:selectOneMenu id="cb_filiere" required="true" value="#{consultationController.idFiliere}" binding="#{consultationController.cbFiliere}">
+		<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+		<f:selectItems value="#{consultationController.listFiliere}" var="tata" itemValue="#{tata.idFiliere}" itemLabel="#{tata.libelleFiliere}"/>
+	</p:selectOneMenu>
+	
+	<p:outputLabel  value="Services"></p:outputLabel>
+	<p:selectOneMenu id="cb_service" required="true" value="#{consultationController.idService}" binding="#{consultationController.cbService}">
+		<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+		<f:selectItems value="#{consultationController.listService}" var="tata" itemValue="#{tata.idService}" itemLabel="#{tata.libelleService}"/>
+	</p:selectOneMenu>
+
+</h:panelGrid>
+</fieldset>
+<br />
+<fieldset>
+ 	<legend>Faire une consultation</legend>		
 		<h:panelGrid columns="4" cellpadding="10">
 	<p:outputLabel for="input_code" value="Code consultation"></p:outputLabel>
 	<p:inputText id="input_code" value="#{consultationController.consultation.codeConsultation}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
 
-	<p:outputLabel for="input_nom" value="Observation"></p:outputLabel>
-	<p:inputText id="input_nom" value="#{consultationController.consultation.observation}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+	<p:outputLabel for="input_obs" value="Observation"></p:outputLabel>
+	<p:inputText id="input_obs" value="#{consultationController.consultation.observation}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
 	
-	<p:outputLabel  value="Patient"></p:outputLabel>
-	<p:selectOneMenu value="#{consultationController.idPatient}">
+	<p:outputLabel  value="Medecin"></p:outputLabel>
+	<p:selectOneMenu value="#{consultationController.idMedecin}">
 		<f:selectItem itemLabel="Selectionnez" itemValue=""/>
-		<f:selectItems value="#{consultationController.listPatient}" var="tata" itemValue="#{tata.idPatient}" itemLabel="#{tata.nomPatient} #{tata.prenomPatient}"/>
+		<f:selectItems value="#{consultationController.listMedecin}" var="tata" itemValue="#{tata.idMedecin}" itemLabel="#{tata.nomMedecin} #{tata.prenomsMedecin}"/>
 	</p:selectOneMenu>
 	
 	<p:outputLabel  value="Type consultation"></p:outputLabel>
@@ -33,7 +78,6 @@
 
 </h:panelGrid>
 </fieldset>
-<br />
 
 <p:toolbar >
 			<f:facet name="left">
@@ -44,7 +88,7 @@
 		
 		<p:dataTable  var="var" value="#{consultationController.listConsultation}"  selectionMode="single" selection="#{consultationController.selectedConsultation}" rowKey="#{var.idConsultation}">
  
- <f:facet name="header"> LISTE DES PATIENTS</f:facet>
+ <f:facet name="header"> LISTE DES CONSULTATIONS</f:facet>
      <p:ajax event="rowSelect" process="@this"  update="form" listener="#{consultationController.selectionnerLigne}"></p:ajax>
    		
    		<p:column headerText="Code consultation" style="width:10%">

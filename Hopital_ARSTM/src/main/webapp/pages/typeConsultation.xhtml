@@ -35,13 +35,13 @@
 		<p:dataTable  var="var" value="#{typeConsultationController.listTypeConsultation }"  selectionMode="single" selection="#{typeConsultationController.selectedTypeConsultation}" rowKey="#{var.idTypeConsultation}">
  
  <f:facet name="header"> LISTE DES TYPES DE CONSULTATION </f:facet>
-     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{genreController.selectionnerLigne}"></p:ajax>
+     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{typeConsultationController.selectionnerLigne}"></p:ajax>
    		
    		<p:column headerText="Code typeConsultation" style="width:30%">
         <h:outputText value="#{var.codeTypeConsultation}"/>
         </p:column>
         
-        <p:column headerText="Libellé typeConsultation">
+        <p:column headerText="Montant typeConsultation">
         <h:outputText value="#{var.montantTypeConsult}"/>
         </p:column>
         

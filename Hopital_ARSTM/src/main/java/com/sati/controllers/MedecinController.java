@@ -74,6 +74,7 @@ public class MedecinController {
 		medecin.setGenre(genre);
 		medecin.setUserAuthentication(userAuthentication);
 		this.service.addObject(medecin);
+		annuler();
 		this.info("Enregistrement effectué avec succès!");
 		medecin.setCodeMedecin(genererCodeMedecin());
 	}

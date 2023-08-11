@@ -40,10 +40,7 @@
 
 <fieldset>
  	<legend>Enregistrement des approvisionnements</legend>
-	<h:panelGrid columns="6" cellpadding="10">
-	<p:outputLabel for="input_codeApp" value="Code: "></p:outputLabel>
-	<p:inputText id="input_codeApp" value="#{approvisionnementController.approvisionnement.codeApprovisionnement}" required="true" 
-	requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+	<h:panelGrid columns="2" cellpadding="10">
 	
 	<p:outputLabel for="input_qte" value="Quantité: "></p:outputLabel>
 	<p:inputText id="input_qte" value="#{approvisionnementController.approvisionnement.quantiteApprovisionnement}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>

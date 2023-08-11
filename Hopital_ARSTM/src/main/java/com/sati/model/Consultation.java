@@ -70,7 +70,7 @@ public class Consultation implements java.io.Serializable {
 		this.idConsultation = idConsultation;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_CAISSE")
 	public Caisse getCaisse() {
 		return this.caisse;
@@ -80,7 +80,7 @@ public class Consultation implements java.io.Serializable {
 		this.caisse = caisse;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_MEDECIN")
 	public Medecin getMedecin() {
 		return this.medecin;
@@ -90,7 +90,7 @@ public class Consultation implements java.io.Serializable {
 		this.medecin = medecin;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_PATIENT", nullable = false)
 	public Patient getPatient() {
 		return this.patient;
@@ -100,7 +100,7 @@ public class Consultation implements java.io.Serializable {
 		this.patient = patient;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_TYPE_CONSULTATION", nullable = false)
 	public TypeConsultation getTypeConsultation() {
 		return this.typeConsultation;
@@ -110,7 +110,7 @@ public class Consultation implements java.io.Serializable {
 		this.typeConsultation = typeConsultation;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID", nullable = false)
 	public UserAuthentication getUserAuthentication() {
 		return this.userAuthentication;
