@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
+// Generated 14 ao�t 2023, 17:26:29 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -39,11 +39,7 @@ public class Caisse implements java.io.Serializable {
 	public Caisse() {
 	}
 
-	public Caisse(Consultation consultation, FacturePharmacie facturePharmacie, Realiser realiser,
-			UserAuthentication userAuthentication) {
-		this.consultation = consultation;
-		this.facturePharmacie = facturePharmacie;
-		this.realiser = realiser;
+	public Caisse(UserAuthentication userAuthentication) {
 		this.userAuthentication = userAuthentication;
 	}
 
@@ -75,7 +71,7 @@ public class Caisse implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_CONSULTATION", nullable = false)
+	@JoinColumn(name = "ID_CONSULTATION")
 	public Consultation getConsultation() {
 		return this.consultation;
 	}
@@ -85,7 +81,7 @@ public class Caisse implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_FACTURE_PHARMACIE", nullable = false)
+	@JoinColumn(name = "ID_FACTURE_PHARMACIE")
 	public FacturePharmacie getFacturePharmacie() {
 		return this.facturePharmacie;
 	}
@@ -95,7 +91,7 @@ public class Caisse implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_REALISER", nullable = false)
+	@JoinColumn(name = "ID_REALISER")
 	public Realiser getRealiser() {
 		return this.realiser;
 	}

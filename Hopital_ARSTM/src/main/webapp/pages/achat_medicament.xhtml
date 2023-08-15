@@ -15,15 +15,13 @@
 			<p:messages autoUpdate="true" closable="true" showDetail="false"></p:messages>
 	<fieldset>
  	<legend>Choix du patient</legend>
- 	<h:panelGrid columns="3" cellpadding="10">
+ 	<h:panelGrid columns="4" cellpadding="10">
  	<p:outputLabel for="cb_pat" value="Patient"/>
 		<p:selectOneMenu id="cb_pat" required="true" value="#{ligneAchatController.idPatient}">
 		<p:ajax listener="#{ligneAchatController.chargerPatient}" event="change" update=":form" process="@this"/>
 		<f:selectItem itemLabel="Selectionnez" itemValue="" />
 		<f:selectItems value="#{ligneAchatController.listPatient}" var="tata" itemLabel="#{tata.nomPatient}" itemValue="#{tata.idPatient}"></f:selectItems>
 		</p:selectOneMenu>
-
-	<p:outputLabel value="#{ligneAchatController.typePatient}" />
  	</h:panelGrid>
  			
 <h:panelGrid columns="6" cellpadding="10">
@@ -45,7 +43,7 @@
 			<td style="width: 50%">
 		
 			<p:dataTable id="medicament" var="variable" value="#{ligneAchatController.listMedicament}"  selectionMode="single"  selection="#{ligneAchatController.selectedMedicament}" rowKey="#{variable.idMedicament}" paginator="true" paginatorPosition="bottom" rows="5" rowsPerPageTemplate="5,10,15,{ShowAll|'All'}">
-			<f:facet name="header">LISTES DES MATERIELS</f:facet>
+			<f:facet name="header">LISTES DES MEDICAMENTS</f:facet>
 			<p:ajax event="rowSelect" listener="#{ligneAchatController.choisirLigne}" update="form"></p:ajax>
 			
 			<p:column headerText="Code">
@@ -89,7 +87,7 @@
 			<fieldset>
 				<p:dataTable var="variable" value="#{ligneAchatController.listAchat}" >
 			
-			<p:column headerText="Code Materiel">
+			<p:column headerText="Code Medicament">
 			<h:outputText value="#{variable.medicament.codeMedicament}" />
 			</p:column>
 			
@@ -104,17 +102,22 @@
 			<p:column headerText="Quantite">
 			<h:outputText value="#{variable.quantiteMedicament}" />
 			</p:column>
-			
-			</p:dataTable>
+		</p:dataTable>
 			</fieldset>
-			
-	 		
-	  <br/>
+			  <br/>
+	 	
+			<p:toolbar >
+				<f:facet name="left">
+					<p:commandButton  binding="#{ligneAchatController.btnEnregistrer}" value="Enregistrer" action="#{ligneAchatController.enregistrer}" update="form" ><p:confirm header="confirmation" message="voulez-vous l'enregistrement?"></p:confirm></p:commandButton>
+					<p:commandButton  binding="#{ligneAchatController.btnAnnuler}" value="Annuler" action="#{ligneAchatController.annuler}" update="form" ><p:confirm header="confirmation" message="voulez-vous l'annulation?"></p:confirm></p:commandButton>
+					
+				</f:facet>
+			</p:toolbar>
+	
 
-	   <p:dataTable var="variable" value="#{ligneAchatController.listLigneAchat}" selectionMode="single" rowKey="#{variable.idAchat}">
+	   <p:dataTable var="variable" value="#{ligneAchatController.listLigneAchat}" selectionMode="single" rowKey="#{variable.idAchat}" paginator="true" paginatorPosition="bottom"  rows="5" rowsPerPageTemplate="5,10,15,{ShowAll|'All'}">
 	  <f:facet name="header">LISTES DES ACHATS</f:facet>
 	 
-	     
 	     
 	     <p:column headerText="Code ligneAchat" >
 	     <h:outputText value="#{variable.codeAchat}"/>
@@ -125,16 +128,16 @@
 	     </p:column>
 	     
 	     <p:column headerText="Quantité medicament" >
-	     <h:outputText value="#{variable.quantiteMedicauent}"/>
+	     <h:outputText value="#{variable.quantiteMedicament}"/>
 	    </p:column>
 	    
 	     <p:column headerText="Nom et prenoms patient" >
 	     <h:outputText value="#{variable.patient.nomPatient} #{variable.patient.prenomPatient}"/>
 	    </p:column>
 	    
-	    <p:column headerText="Facture">
-	    <h:outputText value="#{variable.facturePharmacie.codeFacturePharmacie}" />
-	    </p:column>
+	    <p:column headerText="Facture pharmacie">
+		<h:outputText value="#{variable.facturePharmacie.montantFacturePharmacie}" />
+		</p:column>
 	     
 	   </p:dataTable>
 	   

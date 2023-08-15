@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
+// Generated 14 ao�t 2023, 17:26:29 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -64,7 +64,7 @@ public class Realiser implements java.io.Serializable {
 		this.idRealiser = idRealiser;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_CABINET")
 	public Cabinet getCabinet() {
 		return this.cabinet;
@@ -74,7 +74,7 @@ public class Realiser implements java.io.Serializable {
 		this.cabinet = cabinet;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_CAISSE")
 	public Caisse getCaisse() {
 		return this.caisse;
@@ -84,7 +84,7 @@ public class Realiser implements java.io.Serializable {
 		this.caisse = caisse;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_EXAMEN", nullable = false)
 	public ExamenMedicale getExamenMedicale() {
 		return this.examenMedicale;
@@ -94,7 +94,7 @@ public class Realiser implements java.io.Serializable {
 		this.examenMedicale = examenMedicale;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_PATIENT", nullable = false)
 	public Patient getPatient() {
 		return this.patient;

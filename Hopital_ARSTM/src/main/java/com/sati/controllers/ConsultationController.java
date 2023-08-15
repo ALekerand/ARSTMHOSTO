@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.sati.model.Caisse;
 import com.sati.model.Consultation;
 import com.sati.model.EtudiantArstm;
+import com.sati.model.Externe;
 import com.sati.model.Filiere;
 import com.sati.model.Genre;
 import com.sati.model.Medecin;
@@ -57,6 +59,7 @@ public class ConsultationController {
 	private int idService;
 	private EtudiantArstm etudiant = new EtudiantArstm();
 	private PersonnelArstm personnel = new PersonnelArstm();
+	private Externe externe = new Externe();
 	private String codePatient;
 	private String nomPatient;
 	private String prenomPatient;
@@ -65,6 +68,7 @@ public class ConsultationController {
 	private Medecin medecin = new Medecin();
 	private List<Medecin> listMedecin = new ArrayList<Medecin>();
 	private int idMedecin;
+	private Caisse caisse = new Caisse();
 	
 	private CommandButton btnEnregistrer = new CommandButton();
 	private CommandButton btnModifier = new CommandButton();
@@ -79,6 +83,7 @@ public class ConsultationController {
 		this.cbService.setDisabled(true);
 		patient.setCodePatient(genererCodePatient());
 		this.consultation.setCodeConsultation(genererCodeConsultation());
+		this.caisse.setCodeCaisse(genererCodeCaisee());
 		chagerUtilisateur();
 	}
 	
@@ -105,6 +110,18 @@ public class ConsultationController {
 			prefix = "PA" ;
 		return new String(prefix+(nbEnregistrement+1));
 	}
+	
+	public String genererCodeCaisee() {
+		String prefix="";
+		int nbEnregistrement = this.service.getObjects("Caisse").size();
+		if(nbEnregistrement < 10)
+			prefix = "CCA00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "CCA0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "CCA" ;
+		return new String(prefix+(nbEnregistrement+1));
+	}
 	public UserAuthentication chagerUtilisateur() {
 		return userAuthentication = requeteUtilisateur.recuperUser();
 	}
@@ -113,10 +130,17 @@ public class ConsultationController {
 		switch (nature){
 		case "ETUDIANT":{
 			this.cbFiliere.setDisabled(false);
+			this.cbService.setDisabled(true);
 			break;
 		}
 		case "PERSONNEL":{
 			this.cbService.setDisabled(false);
+			this.cbFiliere.setDisabled(true);
+			break;
+		}
+		case "EXTERNE":{
+			this.cbService.setDisabled(true);
+			this.cbFiliere.setDisabled(true);
 			break;
 		}
 		}
@@ -155,7 +179,16 @@ public class ConsultationController {
 				this.service.addObject(personnel);
 				break;
 			}
-			
+			case "EXTERNE":{
+				externe.setPatient(patient);
+				externe.setIdGenre(idGenre);
+				externe.setCodePatient(patient.getCodePatient());
+				externe.setNomPatient(patient.getNomPatient());
+				externe.setPrenomPatient(patient.getPrenomPatient());
+				externe.setTelephonePatient(patient.getTelephonePatient());
+				this.service.addObject(externe);
+				break;
+			}
 		}
 		medecin = (Medecin) service.getObjectById(idMedecin, "Medecin");
 		typeConsultation = (TypeConsultation) service.getObjectById(idTypeConsultation, "TypeConsultation");
@@ -165,8 +198,16 @@ public class ConsultationController {
 		consultation.setUserAuthentication(userAuthentication);
 		consultation.setDateConsultation(new Date());
 		this.service.addObject(consultation);
-		this.info("Enregistrement effectué avec succès");
+		caisse.setCodeCaisse(genererCodeCaisee());
+		caisse.setConsultation(consultation);
+		caisse.setDateEnregistrement(new Date());
+		caisse.setMontantCaisse(getConsultation().getTypeConsultation().getMontantTypeConsultation());
+		caisse.setUserAuthentication(userAuthentication);
+		this.service.addObject(caisse);
+		consultation.setCaisse(caisse);
+		service.updateObject(consultation);
 		annuler();
+		this.info("Enregistrement effectué avec succès");
 		consultation.setCodeConsultation(genererCodeConsultation());
 	}
 	
@@ -181,6 +222,7 @@ public class ConsultationController {
 		consultation.setCodeConsultation(null);
 		consultation.setObservation(null);
 		setIdTypeConsultation(0);
+		setIdMedecin(0);
 	}
 	public void info(String monMessage) {
 		FacesContext.getCurrentInstance().addMessage((String) null,
@@ -461,6 +503,22 @@ public class ConsultationController {
 
 	public void setCbFiliere(SelectOneMenu cbFiliere) {
 		this.cbFiliere = cbFiliere;
+	}
+
+	public Externe getExterne() {
+		return externe;
+	}
+
+	public void setExterne(Externe externe) {
+		this.externe = externe;
+	}
+
+	public Caisse getCaisse() {
+		return caisse;
+	}
+
+	public void setCaisse(Caisse caisse) {
+		this.caisse = caisse;
 	}
 	
 

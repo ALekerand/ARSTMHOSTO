@@ -12,12 +12,15 @@
 		
 				<fieldset>
  	<legend>ENREGISTREMENT DES TYPES DE CONSULTATION</legend>		
-		<h:panelGrid columns="6" cellpadding="10">
+		<h:panelGrid columns="4" cellpadding="10">
 	<p:outputLabel for="input_code" value="Code typeConsultation"></p:outputLabel>
 	<p:inputText id="input_code" value="#{typeConsultationController.typeConsultation.codeTypeConsultation}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
-
+	
+	<p:outputLabel for="input_lib" value="Libelle typeConsultation"></p:outputLabel>
+	<p:inputText id="input_lib" value="#{typeConsultationController.typeConsultation.libelleTypeConsultation}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	
 <p:outputLabel for="input_mont" value="Montant typeConsultation"></p:outputLabel>
-	<p:inputText id="input_mont" value="#{typeConsultationController.typeConsultation.montantTypeConsult}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
+	<p:inputText id="input_mont" value="#{typeConsultationController.typeConsultation.montantTypeConsultation}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>	
 
 </h:panelGrid>
 </fieldset>
@@ -41,8 +44,12 @@
         <h:outputText value="#{var.codeTypeConsultation}"/>
         </p:column>
         
+        <p:column headerText="Libelle typeConsultation">
+        <h:outputText value="#{var.libelleTypeConsultation}"/>
+        </p:column>
+        
         <p:column headerText="Montant typeConsultation">
-        <h:outputText value="#{var.montantTypeConsult}"/>
+        <h:outputText value="#{var.montantTypeConsultation}"/>
         </p:column>
         
         </p:dataTable>

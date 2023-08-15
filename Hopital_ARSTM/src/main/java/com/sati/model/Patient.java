@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
+// Generated 14 ao�t 2023, 17:26:29 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +32,7 @@ public class Patient implements java.io.Serializable {
 	private Set<Realiser> realisers = new HashSet<Realiser>(0);
 	private Set<LigneAchat> ligneAchats = new HashSet<LigneAchat>(0);
 	private EtudiantArstm etudiantArstm;
+	private Externe externe;
 	private Set<Consultation> consultations = new HashSet<Consultation>(0);
 
 	public Patient() {
@@ -43,7 +44,7 @@ public class Patient implements java.io.Serializable {
 
 	public Patient(Genre genre, String codePatient, String nomPatient, String prenomPatient, String telephonePatient,
 			PersonnelArstm personnelArstm, Set<Realiser> realisers, Set<LigneAchat> ligneAchats,
-			EtudiantArstm etudiantArstm, Set<Consultation> consultations) {
+			EtudiantArstm etudiantArstm, Externe externe, Set<Consultation> consultations) {
 		this.genre = genre;
 		this.codePatient = codePatient;
 		this.nomPatient = nomPatient;
@@ -53,6 +54,7 @@ public class Patient implements java.io.Serializable {
 		this.realisers = realisers;
 		this.ligneAchats = ligneAchats;
 		this.etudiantArstm = etudiantArstm;
+		this.externe = externe;
 		this.consultations = consultations;
 	}
 
@@ -148,6 +150,15 @@ public class Patient implements java.io.Serializable {
 
 	public void setEtudiantArstm(EtudiantArstm etudiantArstm) {
 		this.etudiantArstm = etudiantArstm;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "patient")
+	public Externe getExterne() {
+		return this.externe;
+	}
+
+	public void setExterne(Externe externe) {
+		this.externe = externe;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")

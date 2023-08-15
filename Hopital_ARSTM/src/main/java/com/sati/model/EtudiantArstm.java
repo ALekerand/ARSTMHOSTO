@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
+// Generated 14 ao�t 2023, 17:26:29 by Hibernate Tools 4.3.6.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -62,7 +62,7 @@ public class EtudiantArstm implements java.io.Serializable {
 		this.idPatient = idPatient;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_FILIERE", nullable = false)
 	public Filiere getFiliere() {
 		return this.filiere;
@@ -72,7 +72,7 @@ public class EtudiantArstm implements java.io.Serializable {
 		this.filiere = filiere;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	public Patient getPatient() {
 		return this.patient;

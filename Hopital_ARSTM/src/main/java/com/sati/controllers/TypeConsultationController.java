@@ -68,7 +68,8 @@ public class TypeConsultationController {
 	
 	public void annuler() {
 		typeConsultation.setCodeTypeConsultation(null);
-		typeConsultation.setMontantTypeConsult(null);
+		typeConsultation.setMontantTypeConsultation(null);
+		typeConsultation.setLibelleTypeConsultation(null);
 	}
 	public void info(String monMessage) {
 		FacesContext.getCurrentInstance().addMessage((String) null,

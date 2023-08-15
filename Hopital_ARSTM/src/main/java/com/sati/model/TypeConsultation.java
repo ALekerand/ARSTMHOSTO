@@ -1,5 +1,5 @@
 package com.sati.model;
-// Generated 22 juil. 2023, 19:05:53 by Hibernate Tools 4.3.6.Final
+// Generated 14 ao�t 2023, 17:26:29 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,15 +21,18 @@ public class TypeConsultation implements java.io.Serializable {
 
 	private Integer idTypeConsultation;
 	private String codeTypeConsultation;
-	private Long montantTypeConsult;
+	private String libelleTypeConsultation;
+	private Long montantTypeConsultation;
 	private Set<Consultation> consultations = new HashSet<Consultation>(0);
 
 	public TypeConsultation() {
 	}
 
-	public TypeConsultation(String codeTypeConsultation, Long montantTypeConsult, Set<Consultation> consultations) {
+	public TypeConsultation(String codeTypeConsultation, String libelleTypeConsultation, Long montantTypeConsultation,
+			Set<Consultation> consultations) {
 		this.codeTypeConsultation = codeTypeConsultation;
-		this.montantTypeConsult = montantTypeConsult;
+		this.libelleTypeConsultation = libelleTypeConsultation;
+		this.montantTypeConsultation = montantTypeConsultation;
 		this.consultations = consultations;
 	}
 
@@ -54,13 +57,22 @@ public class TypeConsultation implements java.io.Serializable {
 		this.codeTypeConsultation = codeTypeConsultation;
 	}
 
-	@Column(name = "MONTANT_TYPE_CONSULT", precision = 12, scale = 0)
-	public Long getMontantTypeConsult() {
-		return this.montantTypeConsult;
+	@Column(name = "LIBELLE_TYPE_CONSULTATION", length = 100)
+	public String getLibelleTypeConsultation() {
+		return this.libelleTypeConsultation;
 	}
 
-	public void setMontantTypeConsult(Long montantTypeConsult) {
-		this.montantTypeConsult = montantTypeConsult;
+	public void setLibelleTypeConsultation(String libelleTypeConsultation) {
+		this.libelleTypeConsultation = libelleTypeConsultation;
+	}
+
+	@Column(name = "MONTANT_TYPE_CONSULTATION", precision = 12, scale = 0)
+	public Long getMontantTypeConsultation() {
+		return this.montantTypeConsultation;
+	}
+
+	public void setMontantTypeConsultation(Long montantTypeConsultation) {
+		this.montantTypeConsultation = montantTypeConsultation;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "typeConsultation")

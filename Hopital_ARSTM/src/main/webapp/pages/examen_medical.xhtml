@@ -11,6 +11,25 @@
 		<h:form id="form">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
+		
+				<fieldset>
+ 	<legend>CHOIX DU PATIENT ET DU CABINET</legend>		
+		<h:panelGrid columns="6" cellpadding="10">
+		
+	<p:outputLabel  value="Patient"></p:outputLabel>
+	<p:selectOneMenu value="#{examenController.idPatient}">
+		<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+		<f:selectItems value="#{examenController.listPatient}" var="tata" itemValue="#{tata.idPatient}" itemLabel="#{tata.nomPatient} #{tata.prenomPatient}"/>
+	</p:selectOneMenu>
+	
+	<p:outputLabel  value="Cabinet"></p:outputLabel>
+	<p:selectOneMenu value="#{examenController.idCabinet}">
+		<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+		<f:selectItems value="#{examenController.listCabinet}" var="tata" itemValue="#{tata.idCabinet}" itemLabel="#{tata.nomCabinet}"/>
+	</p:selectOneMenu>
+	
+</h:panelGrid>
+</fieldset>
 				<fieldset>
  	<legend>ENREGISTREMENT DES EXAMENS MEDICALS</legend>		
 		<h:panelGrid columns="6" cellpadding="10">
@@ -36,21 +55,30 @@
 		</p:toolbar>
 		<br/>
 		
-		<p:dataTable  var="var" value="#{examenController.listExamen}"  selectionMode="single" selection="#{examenController.selectedExamen}" rowKey="#{var.idExamen}">
+		<p:dataTable  var="var" value="#{examenController.listRealiser}"  selectionMode="single" selection="#{examenController.selectedRealiser}" rowKey="#{var.idRealiser}">
  
  <f:facet name="header"> LISTE DES EXAMENS MEDICALS </f:facet>
      <p:ajax event="rowSelect" process="@this"  update="form" listener="#{examenController.selectionnerLigne}"></p:ajax>
    		
-   		<p:column headerText="Code examen" style="width:30%">
-        <h:outputText value="#{var.codeExamen}"/>
+   		
+   		<p:column headerText="Patient" >
+        <h:outputText value="#{var.patient.nomPatient} #{var.patient.prenomPatient}"/>
+        </p:column>
+        
+        <p:column headerText="Cabinet">
+        <h:outputText value="#{var.cabinet.nomCabinet}"/>
+        </p:column>
+        
+   		<p:column headerText="Code examen" >
+        <h:outputText value="#{var.examenMedicale.codeExamen}"/>
         </p:column>
         
         <p:column headerText="Nom examen">
-        <h:outputText value="#{var.nomExamen}"/>
+        <h:outputText value="#{var.examenMedicale.nomExamen}"/>
         </p:column>
         
         <p:column headerText="Coût examen">
-        <h:outputText value="#{var.cout}"/>
+        <h:outputText value="#{var.examenMedicale.cout}"/>
         </p:column>
         
         </p:dataTable>
